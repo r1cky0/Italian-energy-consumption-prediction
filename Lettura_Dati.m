@@ -8,10 +8,12 @@ giorno_settimana= tab.giorno_settimana;
 dati = tab.dati;
 
 figure(1)
-plot(dati)
+plot3(giorno_anno, giorno_settimana, dati, 'x')
+
 title('Andamento giornaliero')
-xlabel("Giorno dell' anno");
-ylabel("Dato letto");
+xlabel("Giorno anno");
+ylabel("Giorno settimana");
+zlabel("Consumo energetico [kw]");
 grid on
 hold on
 %Notiamo un duplice andamento sinusoidale. Sia nell' arco giornaliero che
@@ -66,7 +68,7 @@ end
 %% MODELLI 
 
 uni = ones(365,1);
-f1 = fit(giorno_anno, dati,'fourier6');
+% f1 = fit(giorno_anno, dati,'fourier6');
 % plot(f1,giorno_anno,media_tot)
 
 %Stima annuale
@@ -102,7 +104,19 @@ y2= Phi2 * ThetaLS2;
 epsilon2 = dati(1:365) - y2;
 
 %plot(y2)
-
 yfin = y + y2;
-plot(yfin)
+% plot(yfin)
+
+% %Modello 3d
+% Phi3 = [uni cos(w*giorni_lineare) sin(w*giorni_lineare) cos(w2*giorno_lineare_settimana) ...
+%     sin(w2*giorno_lineare_settimana) cos(2*w*giorni_lineare) sin(2*w*giorni_lineare) ...
+%     cos(2*w2*giorno_lineare_settimana) sin(2*w2*giorno_lineare_settimana)];
+% 
+% ThetaLS3 = Phi3\dati(1:365);
+% 
+% y3= Phi3 * ThetaLS3;
+% 
+% epsilon3 = dati(1:365) - y3;
+% 
+% plot3(giorni_lineare, giorno_lineare_settimana, y3)
 

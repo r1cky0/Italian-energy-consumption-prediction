@@ -23,6 +23,11 @@ giorni_anno_modello = giorni_anni(1:365);
 giorni_settimana_modello = giorni_settimana(1:365);
 dati_modello = dati(1:365);
 
+%DATI PER VALIDAZIONE(SECONDO ANNO)
+giorni_anno_validazione = giorni_anni(366:730);
+giorni_settimana_validazione = giorni_settimana(366:730);
+dati_validazione = dati(366:730);
+
 %PLOT DATI
 figure(1)
 plot(giorni_anno_modello, dati_modello);
@@ -81,6 +86,7 @@ grid on
 hold on
 plot(giorni_anno_modello, dati_modello)
 plot(y_fin);
+
 
 
 
