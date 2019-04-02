@@ -38,7 +38,7 @@ grid on
 
 %% MODELLI 
 
-%MODELLO PERIODICITA' ANNUALE
+%MODELLO PERIODICITÁ ANNUALE
 uni = ones(365,1);
 w_annuale = 2*pi/365;
 
@@ -54,7 +54,7 @@ y_annuale= Phi_annuale * ThetaLS_annuale;
 epsilon_annuale = dati_modello - y_annuale;
 
 figure(2)
-title('MODELLO PERIODICITA'' ANNUALE')
+title('MODELLO PERIODICITÁ ANNUALE')
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
 grid on
@@ -62,7 +62,7 @@ hold on
 plot(giorni_anno_modello, dati_modello)
 plot(y_annuale);
 
-%MODELLO PERIODICITA' SETTIMANALE
+%MODELLO PERIODICITÁ SETTIMANALE
 w_settimanale = 2*pi/7;
 
 Phi_settimanale = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
@@ -79,7 +79,7 @@ epsilon_settimanale = dati_modello - y_settimanale;
 y_fin = y_annuale + y_settimanale;
 
 figure(3)
-title('MODELLO PERIODICITA'' SETTIMANALE')
+title('MODELLO PERIODICITÁ SETTIMANALE')
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
 grid on
