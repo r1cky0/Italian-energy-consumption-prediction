@@ -120,3 +120,5 @@ yfin = y + y2;
 % 
 % plot3(giorni_lineare, giorno_lineare_settimana, y3)
 
+%CIAOSIMO
+
