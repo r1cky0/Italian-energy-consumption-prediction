@@ -91,6 +91,12 @@ epsilon_annuale3 = dati_modello - y_annuale3;
 epsilon_annuale4 = dati_modello - y_annuale4;
 epsilon_annuale5 = dati_modello - y_annuale5;
 
+SSR_year1 = epsilon_annuale1'*espilon_annuale1;
+SSR_year2 = epsilon_annuale2'*espilon_annuale2;
+SSR_year3 = epsilon_annuale3'*espilon_annuale3;
+SSR_year4 = epsilon_annuale4'*espilon_annuale4;
+SSR_year5 = epsilon_annuale5'*espilon_annuale5;
+
 figure(2)
 title('MODELLO PERIODICITÁ ANNUALE')
 xlabel("Giorno anno");
@@ -141,6 +147,12 @@ epsilon_settimanale2 = dati_modello - y_settimanale2;
 epsilon_settimanale3 = dati_modello - y_settimanale3;
 epsilon_settimanale4 = dati_modello - y_settimanale4;
 epsilon_settimanale5 = dati_modello - y_settimanale5;
+
+SSR_week1 = epsilon_setimanale1'*epsilon_settimanale1;
+SSR_week2 = epsilon_setimanale2'*epsilon_settimanale2;
+SSR_week3 = epsilon_setimanale3'*epsilon_settimanale3;
+SSR_week4 = epsilon_setimanale4'*epsilon_settimanale4;
+SSR_week5 = epsilon_setimanale5'*epsilon_settimanale5;
 
 y_fin1 = y_annuale1 + y_settimanale1;
 y_fin2 = y_annuale2 + y_settimanale2;
