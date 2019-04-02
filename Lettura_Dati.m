@@ -115,10 +115,12 @@ yfin = y + y2;
 % ThetaLS3 = Phi3\dati(1:365);
 % 
 % y3= Phi3 * ThetaLS3;
-% 
+%  
 % epsilon3 = dati(1:365) - y3;
-% 
+%  
 % plot3(giorni_lineare, giorno_lineare_settimana, y3)
 
-%CIAOSIMO
+%**************************************************************************
+%BISOGNA FARE LA GRIGLIA PER DISEGNARE LA SUPERFICIE CORRETTAMENTE NEL PLOT
+%**************************************************************************
 
