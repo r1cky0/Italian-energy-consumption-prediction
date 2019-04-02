@@ -51,18 +51,45 @@ uni = ones(365,1);
 %e n é il grado
 w_annuale = 2*pi/365;
 
-Phi_annuale = [uni cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello) ... 
+Phi_annuale1 = [uni cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello)];
+
+Phi_annuale2 = [uni cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello) ... 
+    cos(2*w_annuale*giorni_anno_modello) sin(2*w_annuale*giorni_anno_modello)];
+
+Phi_annuale3 = [uni cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello) ... 
+    cos(2*w_annuale*giorni_anno_modello) sin(2*w_annuale*giorni_anno_modello) ... 
+    cos(3*w_annuale*giorni_anno_modello) sin(3*w_annuale*giorni_anno_modello)];
+
+Phi_annuale4 = [uni cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello) ... 
     cos(2*w_annuale*giorni_anno_modello) sin(2*w_annuale*giorni_anno_modello) ... 
     cos(3*w_annuale*giorni_anno_modello) sin(3*w_annuale*giorni_anno_modello) ...
     cos(4*w_annuale*giorni_anno_modello) sin(4*w_annuale*giorni_anno_modello)];
 
+Phi_annuale5 = [uni cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello) ... 
+    cos(2*w_annuale*giorni_anno_modello) sin(2*w_annuale*giorni_anno_modello) ... 
+    cos(3*w_annuale*giorni_anno_modello) sin(3*w_annuale*giorni_anno_modello) ...
+    cos(4*w_annuale*giorni_anno_modello) sin(4*w_annuale*giorni_anno_modello) ...
+    cos(5*w_annuale*giorni_anno_modello) sin(5*w_annuale*giorni_anno_modello)];
+
 %ThetaLS modellizza i coefficienti a0, an, bn con n che va da 1 al grado
 %scelto per la serie(ovvero il numero di armoniche)
-ThetaLS_annuale = Phi_annuale\dati_modello;
+ThetaLS_annuale1 = Phi_annuale1\dati_modello;
+ThetaLS_annuale2 = Phi_annuale2\dati_modello;
+ThetaLS_annuale3 = Phi_annuale3\dati_modello;
+ThetaLS_annuale4 = Phi_annuale4\dati_modello;
+ThetaLS_annuale5 = Phi_annuale5\dati_modello;
 
-y_annuale= Phi_annuale * ThetaLS_annuale;
+y_annuale1= Phi_annuale1 * ThetaLS_annuale1;
+y_annuale2= Phi_annuale2 * ThetaLS_annuale2;
+y_annuale3= Phi_annuale3 * ThetaLS_annuale3;
+y_annuale4= Phi_annuale4 * ThetaLS_annuale4;
+y_annuale5= Phi_annuale5 * ThetaLS_annuale5;
 
-epsilon_annuale = dati_modello - y_annuale;
+epsilon_annuale1 = dati_modello - y_annuale1;
+epsilon_annuale2 = dati_modello - y_annuale2;
+epsilon_annuale3 = dati_modello - y_annuale3;
+epsilon_annuale4 = dati_modello - y_annuale4;
+epsilon_annuale5 = dati_modello - y_annuale5;
 
 figure(2)
 title('MODELLO PERIODICITÁ ANNUALE')
@@ -71,24 +98,55 @@ ylabel("Consumo energetico [kw]");
 grid on
 hold on
 plot(giorni_anno_modello, dati_modello)
-plot(y_annuale);
+plot(y_annuale5);
 
 %MODELLO PERIODICITÁ SETTIMANALE
 %Il periodo é ora di 7 giorni
 w_settimanale = 2*pi/7;
 
-Phi_settimanale = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
+Phi_settimanale1 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello)];
+
+Phi_settimanale2 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
+    cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello)];
+
+Phi_settimanale3 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
+    cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
+    cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello)];
+
+Phi_settimanale4 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
     cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
     cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello) ...
     cos(4*w_settimanale*giorni_settimana_modello) sin(4*w_settimanale*giorni_settimana_modello)];
 
-ThetaLS_settimanale = Phi_settimanale\dati_modello;
+Phi_settimanale5 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
+    cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
+    cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello) ...
+    cos(4*w_settimanale*giorni_settimana_modello) sin(4*w_settimanale*giorni_settimana_modello) ...
+    cos(5*w_settimanale*giorni_settimana_modello) sin(5*w_settimanale*giorni_settimana_modello)];
 
-y_settimanale= Phi_settimanale * ThetaLS_settimanale;
+ThetaLS_settimanale1 = Phi_settimanale1\dati_modello;
+ThetaLS_settimanale2 = Phi_settimanale2\dati_modello;
+ThetaLS_settimanale3 = Phi_settimanale3\dati_modello;
+ThetaLS_settimanale4 = Phi_settimanale4\dati_modello;
+ThetaLS_settimanale5 = Phi_settimanale5\dati_modello;
 
-epsilon_settimanale = dati_modello - y_settimanale;
+y_settimanale1= Phi_settimanale1 * ThetaLS_settimanale1;
+y_settimanale2= Phi_settimanale2 * ThetaLS_settimanale2;
+y_settimanale3= Phi_settimanale3 * ThetaLS_settimanale3;
+y_settimanale4= Phi_settimanale4 * ThetaLS_settimanale4;
+y_settimanale5= Phi_settimanale5 * ThetaLS_settimanale5;
 
-y_fin = y_annuale + y_settimanale;
+epsilon_settimanale1 = dati_modello - y_settimanale1;
+epsilon_settimanale2 = dati_modello - y_settimanale2;
+epsilon_settimanale3 = dati_modello - y_settimanale3;
+epsilon_settimanale4 = dati_modello - y_settimanale4;
+epsilon_settimanale5 = dati_modello - y_settimanale5;
+
+y_fin1 = y_annuale1 + y_settimanale1;
+y_fin2 = y_annuale2 + y_settimanale2;
+y_fin3 = y_annuale3 + y_settimanale3;
+y_fin4 = y_annuale4 + y_settimanale4;
+y_fin5 = y_annuale5 + y_settimanale5;
 
 figure(3)
 title('MODELLO PERIODICITÁ SETTIMANALE')
@@ -97,7 +155,7 @@ ylabel("Consumo energetico [kw]");
 grid on
 hold on
 plot(giorni_anno_modello, dati_modello)
-plot(y_fin);
+plot(y_fin5);
 
 
 
