@@ -158,5 +158,3 @@ plot(giorni_anno_modello, dati_modello)
 plot(y_fin5);
 
 
-
-
