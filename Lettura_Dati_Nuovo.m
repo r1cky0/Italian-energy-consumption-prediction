@@ -179,7 +179,29 @@ grid on
 hold on
 plot3(giorni_anno_modello, giorni_settimana_modello,y_fin5,'x')
 
-% [A,S] = meshgrid(giorni_anno_modello, giorni_settimana_modello);
+%% Test Validazione
+%Test F al 95%
+%f è un indice della riduzione % di SSR che ottengo passando dal modello 
+%Mk-1 (meno complesso) al modello Mk (più complesso)
+%f? = finv(1-?, gradi libertá numeratore, gradi libertá denominatore)
+%f= (Numero Copie dati - k)*(SSRk-1 - SSRk)/SSRk
+% f < f? ? scelgo il modello Mk-1
+% f > f? ? scelgo il modello Mk
+
+%Fra 1 e 2 
+fAlpha_anno1= finv(1-0.05, 1, 2);
+f_anno12= (365-2)*(SSR_year1 - SSR_year2)/(SSR_year2);
+%fra 2 e 3:
+fAlpha_anno2= finv(1-0.05, 1, 3);
+f_anno23= (365-3)*(SSR_year2 - SSR_year3)/(SSR_year3);
+%fra 3 e 4:
+fAlpha_anno3= finv(1-0.05, 1, 4);
+f_anno34= (365-4)*(SSR_year3 - SSR_year4)/(SSR_year4);
+%fra 4 e 5:
+fAlpha_anno4= finv(1-0.05, 1, 5);
+f_anno45= (365-5)*(SSR_year4 - SSR_year5)/(SSR_year5);
+
+
 
 
 
