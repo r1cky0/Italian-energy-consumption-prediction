@@ -180,7 +180,7 @@ hold on
 plot3(giorni_anno_modello, giorni_settimana_modello,y_fin5,'x')
 
 %% Test Validazione
-
+%USARE DIVERSI CRITERI, NO TEST F SU MODELLI CON SERIE DI FOURIER
 
 
 
