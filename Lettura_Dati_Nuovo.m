@@ -91,11 +91,11 @@ epsilon_annuale3 = dati_modello - y_annuale3;
 epsilon_annuale4 = dati_modello - y_annuale4;
 epsilon_annuale5 = dati_modello - y_annuale5;
 
-SSR_year1 = epsilon_annuale1'*epsilon_annuale1;
-SSR_year2 = epsilon_annuale2'*epsilon_annuale2;
-SSR_year3 = epsilon_annuale3'*epsilon_annuale3;
-SSR_year4 = epsilon_annuale4'*epsilon_annuale4;
-SSR_year5 = epsilon_annuale5'*epsilon_annuale5;
+SSR_annuale1 = epsilon_annuale1'*epsilon_annuale1;
+SSR_annuale2 = epsilon_annuale2'*epsilon_annuale2;
+SSR_annuale3 = epsilon_annuale3'*epsilon_annuale3;
+SSR_annuale4 = epsilon_annuale4'*epsilon_annuale4;
+SSR_annuale5 = epsilon_annuale5'*epsilon_annuale5;
 
 figure(2)
 title('MODELLO PERIODICITÁ ANNUALE')
@@ -148,11 +148,11 @@ epsilon_settimanale3 = dati_modello - y_settimanale3;
 epsilon_settimanale4 = dati_modello - y_settimanale4;
 epsilon_settimanale5 = dati_modello - y_settimanale5;
 
-SSR_week1 = epsilon_settimanale1'*epsilon_settimanale1;
-SSR_week2 = epsilon_settimanale2'*epsilon_settimanale2;
-SSR_week3 = epsilon_settimanale3'*epsilon_settimanale3;
-SSR_week4 = epsilon_settimanale4'*epsilon_settimanale4;
-SSR_week5 = epsilon_settimanale5'*epsilon_settimanale5;
+SSR_settimanale1 = epsilon_settimanale1'*epsilon_settimanale1;
+SSR_settimanale2 = epsilon_settimanale2'*epsilon_settimanale2;
+SSR_settimanale3 = epsilon_settimanale3'*epsilon_settimanale3;
+SSR_settimanale4 = epsilon_settimanale4'*epsilon_settimanale4;
+SSR_settimanale5 = epsilon_settimanale5'*epsilon_settimanale5;
 
 y_fin1 = y_annuale1 + y_settimanale1;
 y_fin2 = y_annuale2 + y_settimanale2;
@@ -170,36 +170,17 @@ plot(giorni_anno_modello, dati_modello)
 plot(y_fin5);
 
 figure(4)
-plot3(giorni_anno_modello, giorni_settimana_modello,dati(1:365),'o')
+plot3(giorni_anno_modello, giorni_settimana_modello,dati_modello,'o')
 title("MODELLO 3D")
 xlabel('Giorno dell''anno')
 ylabel('Giorno della settimana')
-zlabel('Dati')
+zlabel('Consumo energetico [kw]')
 grid on
 hold on
 plot3(giorni_anno_modello, giorni_settimana_modello,y_fin5,'x')
 
 %% Test Validazione
-%Test F al 95%
-%f è un indice della riduzione % di SSR che ottengo passando dal modello 
-%Mk-1 (meno complesso) al modello Mk (più complesso)
-%f? = finv(1-?, gradi libertá numeratore, gradi libertá denominatore)
-%f= (Numero Copie dati - k)*(SSRk-1 - SSRk)/SSRk
-% f < f? ? scelgo il modello Mk-1
-% f > f? ? scelgo il modello Mk
 
-%Fra 1 e 2 
-fAlpha_anno1= finv(1-0.05, 1, 2);
-f_anno12= (365-2)*(SSR_year1 - SSR_year2)/(SSR_year2);
-%fra 2 e 3:
-fAlpha_anno2= finv(1-0.05, 1, 3);
-f_anno23= (365-3)*(SSR_year2 - SSR_year3)/(SSR_year3);
-%fra 3 e 4:
-fAlpha_anno3= finv(1-0.05, 1, 4);
-f_anno34= (365-4)*(SSR_year3 - SSR_year4)/(SSR_year4);
-%fra 4 e 5:
-fAlpha_anno4= finv(1-0.05, 1, 5);
-f_anno45= (365-5)*(SSR_year4 - SSR_year5)/(SSR_year5);
 
 
 
