@@ -64,13 +64,14 @@ Phi_annuale5 = [uni cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno
     cos(4*w_annuale*giorni_anno_modello) sin(4*w_annuale*giorni_anno_modello) ...
     cos(5*w_annuale*giorni_anno_modello) sin(5*w_annuale*giorni_anno_modello)];
 
-%ThetaLS modellizza i coefficienti a0, an, bn con n che va da 1 al grado
-%scelto per la serie(ovvero il numero di armoniche)
+%Y=Phi * Theta ---> Essendo matrici: Theta = Phi inversa * Y
 ThetaLS_annuale1 = Phi_annuale1\dati_modello;
 ThetaLS_annuale2 = Phi_annuale2\dati_modello;
 ThetaLS_annuale3 = Phi_annuale3\dati_modello;
 ThetaLS_annuale4 = Phi_annuale4\dati_modello;
 ThetaLS_annuale5 = Phi_annuale5\dati_modello;
+%ThetaLS modellizza i coefficienti a0, an, bn con n che va da 1 al grado
+%scelto per la serie(ovvero il numero di armoniche)
 
 y_annuale1= Phi_annuale1 * ThetaLS_annuale1;
 y_annuale2= Phi_annuale2 * ThetaLS_annuale2;
