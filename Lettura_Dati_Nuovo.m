@@ -34,18 +34,11 @@ giorni_anno_validazione = giorni_anni(366:730);
 giorni_settimana_validazione = giorni_settimana(366:730);
 dati_validazione = dati(366:730);
 
-%PLOT DATI DEL PRIMO ANNO
-figure(2)
-plot(giorni_anno_modello, dati_modello);
-title('DATI PRIMO ANNO')
-xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
-grid on
-
 %% MODELLI 
 
 %MODELLO PERIODICITÁ ANNUALE
 uni = ones(365,1);
+n = length(uni)
 
 %Nelle serie di fourier abbiamo sin(n*w*x) e cos(n*w*x) dove w=2pi/Periodo
 %e n é il grado
@@ -179,10 +172,62 @@ grid on
 hold on
 plot3(giorni_anno_modello, giorni_settimana_modello,y_fin5,'x')
 
-%% Test Validazione
-%USARE DIVERSI CRITERI, NO TEST F SU MODELLI CON SERIE DI FOURIER
+%% Test Validazione Modello Annuale
+%TEST FPE, AIC, MDL
+q1 = length(ThetaLS_annuale1);
+fpe1 = SSR_annuale1*(n+q1)/(n-q1);
+aic1 = 2*q1/n + log(SSR_annuale1);
+mdl1 = log(n)*q1/n + log(SSR_annuale1);
 
+q2 = length(ThetaLS_annuale2);
+fpe2 = SSR_annuale2*(n+q2)/(n-q2);
+aic2 = 2*q2/n + log(SSR_annuale2);
+mdl2 = log(n)*q2/n + log(SSR_annuale2);
 
+q3 = length(ThetaLS_annuale3);
+fpe3 = SSR_annuale3*(n+q3)/(n-q3);
+aic3 = 2*q3/n + log(SSR_annuale3);
+mdl3 = log(n)*q3/n + log(SSR_annuale3);
+
+q4 = length(ThetaLS_annuale4);
+fpe4 = SSR_annuale4*(n+q4)/(n-q4);
+aic4 = 2*q4/n + log(SSR_annuale4);
+mdl4 = log(n)*q4/n + log(SSR_annuale4);
+
+q5 = length(ThetaLS_annuale5);
+fpe5 = SSR_annuale5*(n+q5)/(n-q5);
+aic5 = 2*q5/n + log(SSR_annuale5);
+mdl5 = log(n)*q5/n + log(SSR_annuale5);
+
+%MODELLO 3 SEMBRA IL MIGLIORE PER TUTTI I CRITERI, MA BISOGNA CONTROLLARE
+%IL 5 POICHE DECRESCE
+
+%CROSSVALIDAZIONE
+epsilon_validazione1 = dati_validazione - y_annuale1;
+SSR_validazione1 = epsilon_validazione1'*epsilon_validazione1;
+
+epsilon_validazione2 = dati_validazione - y_annuale2;
+SSR_validazione2 = epsilon_validazione2'*epsilon_validazione2;
+
+epsilon_validazione3 = dati_validazione - y_annuale3;
+SSR_validazione3 = epsilon_validazione3'*epsilon_validazione3;
+
+epsilon_validazione4 = dati_validazione - y_annuale4;
+SSR_validazione4 = epsilon_validazione4'*epsilon_validazione4;
+
+epsilon_validazione5 = dati_validazione - y_annuale5;
+SSR_validazione5 = epsilon_validazione5'*epsilon_validazione5;
+
+figure(5);
+title('VALIDAZIONE MODELLO PERIODICITÁ ANNUALE')
+xlabel("Giorno anno");
+ylabel("Consumo energetico [kw]");
+grid on
+hold on
+plot(giorni_anno_validazione, dati_validazione)
+plot(y_annuale4);
+
+%MODELLO 4 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
 
 
 
