@@ -38,7 +38,7 @@ dati_validazione = dati(366:730);
 
 %MODELLO PERIODICITÁ ANNUALE
 uni = ones(365,1);
-n = length(uni)
+n = length(uni);
 
 %Nelle serie di fourier abbiamo sin(n*w*x) e cos(n*w*x) dove w=2pi/Periodo
 %e n é il grado
