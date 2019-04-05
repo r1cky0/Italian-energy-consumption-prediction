@@ -219,7 +219,7 @@ epsilon_validazione5 = dati_validazione - y_annuale5;
 SSR_validazione5 = epsilon_validazione5'*epsilon_validazione5;
 
 figure(5);
-title('VALIDAZIONE MODELLO PERIODICITÁ ANNUALE')
+title('VALIDAZIONE MODELLO PERIODICITÁ ANNUALE (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
 grid on
