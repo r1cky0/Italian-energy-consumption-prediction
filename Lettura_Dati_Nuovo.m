@@ -200,7 +200,7 @@ aic5 = 2*q5/n + log(SSR_annuale5);
 mdl5 = log(n)*q5/n + log(SSR_annuale5);
 
 %MODELLO 3 SEMBRA IL MIGLIORE PER TUTTI I CRITERI, MA BISOGNA CONTROLLARE
-%IL 5 POICHE DECRESCE
+%IL 5 POICHÉ DECRESCE
 
 %CROSSVALIDAZIONE
 epsilon_validazione1 = dati_validazione - y_annuale1;
