@@ -142,12 +142,12 @@ Phi_settimanale6 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanal
     cos(5*w_settimanale*giorni_settimana_modello) sin(5*w_settimanale*giorni_settimana_modello)...
     cos(6*w_settimanale*giorni_settimana_modello) sin(6*w_settimanale*giorni_settimana_modello)];
 
-ThetaLS_settimanale1 = Phi_settimanale1\dati_modello;
-ThetaLS_settimanale2 = Phi_settimanale2\dati_modello;
-ThetaLS_settimanale3 = Phi_settimanale3\dati_modello;
-ThetaLS_settimanale4 = Phi_settimanale4\dati_modello;
-ThetaLS_settimanale5 = Phi_settimanale5\dati_modello;
-ThetaLS_settimanale6 = Phi_settimanale6\dati_modello;
+ThetaLS_settimanale1 = Phi_settimanale1\epsilon_annuale1;
+ThetaLS_settimanale2 = Phi_settimanale2\epsilon_annuale2;
+ThetaLS_settimanale3 = Phi_settimanale3\epsilon_annuale3;
+ThetaLS_settimanale4 = Phi_settimanale4\epsilon_annuale4;
+ThetaLS_settimanale5 = Phi_settimanale5\epsilon_annuale5;
+ThetaLS_settimanale6 = Phi_settimanale6\epsilon_annuale6;
 
 y_settimanale1= Phi_settimanale1 * ThetaLS_settimanale1;
 y_settimanale2= Phi_settimanale2 * ThetaLS_settimanale2;
