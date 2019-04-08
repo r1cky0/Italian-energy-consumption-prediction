@@ -155,92 +155,53 @@ Phi_settimanale4 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanal
     cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello) ...
     cos(4*w_settimanale*giorni_settimana_modello) sin(4*w_settimanale*giorni_settimana_modello)];
 
-Phi_settimanale5 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
-    cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
-    cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello) ...
-    cos(4*w_settimanale*giorni_settimana_modello) sin(4*w_settimanale*giorni_settimana_modello) ...
-    cos(5*w_settimanale*giorni_settimana_modello) sin(5*w_settimanale*giorni_settimana_modello)];
-
-Phi_settimanale6 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
-    cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
-    cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello) ...
-    cos(4*w_settimanale*giorni_settimana_modello) sin(4*w_settimanale*giorni_settimana_modello) ...
-    cos(5*w_settimanale*giorni_settimana_modello) sin(5*w_settimanale*giorni_settimana_modello)...
-    cos(6*w_settimanale*giorni_settimana_modello) sin(6*w_settimanale*giorni_settimana_modello)];
-
-Phi_settimanale7 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
-    cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
-    cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello) ...
-    cos(4*w_settimanale*giorni_settimana_modello) sin(4*w_settimanale*giorni_settimana_modello) ...
-    cos(5*w_settimanale*giorni_settimana_modello) sin(5*w_settimanale*giorni_settimana_modello) ...
-    cos(6*w_settimanale*giorni_settimana_modello) sin(6*w_settimanale*giorni_settimana_modello) ...
-    cos(7*w_settimanale*giorni_settimana_modello) sin(7*w_settimanale*giorni_settimana_modello)];
-
-Phi_settimanale8 = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
-    cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
-    cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello) ...
-    cos(4*w_settimanale*giorni_settimana_modello) sin(4*w_settimanale*giorni_settimana_modello) ...
-    cos(5*w_settimanale*giorni_settimana_modello) sin(5*w_settimanale*giorni_settimana_modello) ...
-    cos(6*w_settimanale*giorni_settimana_modello) sin(6*w_settimanale*giorni_settimana_modello) ...
-    cos(7*w_settimanale*giorni_settimana_modello) sin(7*w_settimanale*giorni_settimana_modello) ...
-    cos(8*w_settimanale*giorni_settimana_modello) sin(8*w_settimanale*giorni_settimana_modello)];
-
 
 ThetaLS_settimanale1 = Phi_settimanale1\epsilon_annuale1;
 ThetaLS_settimanale2 = Phi_settimanale2\epsilon_annuale2;
 ThetaLS_settimanale3 = Phi_settimanale3\epsilon_annuale3;
 ThetaLS_settimanale4 = Phi_settimanale4\epsilon_annuale4;
-ThetaLS_settimanale5 = Phi_settimanale5\epsilon_annuale5;
-ThetaLS_settimanale6 = Phi_settimanale6\epsilon_annuale6;
-ThetaLS_settimanale7 = Phi_settimanale7\epsilon_annuale7;
-ThetaLS_settimanale8 = Phi_settimanale8\epsilon_annuale8;
 
-y_settimanale1= Phi_settimanale1 * ThetaLS_settimanale1;
-y_settimanale2= Phi_settimanale2 * ThetaLS_settimanale2;
-y_settimanale3= Phi_settimanale3 * ThetaLS_settimanale3;
-y_settimanale4= Phi_settimanale4 * ThetaLS_settimanale4;
-y_settimanale5= Phi_settimanale5 * ThetaLS_settimanale5;
-y_settimanale6= Phi_settimanale6 * ThetaLS_settimanale6;
-y_settimanale7= Phi_settimanale7 * ThetaLS_settimanale7;
-y_settimanale8= Phi_settimanale8 * ThetaLS_settimanale8;
+
+%PHI VALIDAZIONE
+Phi_validazione1 = [cos(w_settimanale*giorni_settimana_validazione) sin(w_settimanale*giorni_settimana_validazione)];
+
+Phi_validazione2 = [cos(w_settimanale*giorni_settimana_validazione) sin(w_settimanale*giorni_settimana_validazione) ...
+    cos(2*w_settimanale*giorni_settimana_validazione) sin(2*w_settimanale*giorni_settimana_validazione)];
+
+Phi_validazione3 = [cos(w_settimanale*giorni_settimana_validazione) sin(w_settimanale*giorni_settimana_validazione) ...
+    cos(2*w_settimanale*giorni_settimana_validazione) sin(2*w_settimanale*giorni_settimana_validazione) ...
+    cos(3*w_settimanale*giorni_settimana_validazione) sin(3*w_settimanale*giorni_settimana_validazione)];
+
+Phi_validazione4 = [cos(w_settimanale*giorni_settimana_validazione) sin(w_settimanale*giorni_settimana_validazione) ...
+    cos(2*w_settimanale*giorni_settimana_validazione) sin(2*w_settimanale*giorni_settimana_validazione) ...
+    cos(3*w_settimanale*giorni_settimana_validazione) sin(3*w_settimanale*giorni_settimana_validazione) ...
+    cos(4*w_settimanale*giorni_settimana_validazione) sin(4*w_settimanale*giorni_settimana_validazione)];
+
+y_settimanale1= Phi_validazione1 * ThetaLS_settimanale1;
+y_settimanale2= Phi_validazione2 * ThetaLS_settimanale2;
+y_settimanale3= Phi_validazione3 * ThetaLS_settimanale3;
+y_settimanale4= Phi_validazione4 * ThetaLS_settimanale4;
 
 epsilon_settimanale1 = dati_modello - y_settimanale1;
 epsilon_settimanale2 = dati_modello - y_settimanale2;
 epsilon_settimanale3 = dati_modello - y_settimanale3;
 epsilon_settimanale4 = dati_modello - y_settimanale4;
-epsilon_settimanale5 = dati_modello - y_settimanale5;
-epsilon_settimanale6 = dati_modello - y_settimanale6;
-epsilon_settimanale7 = dati_modello - y_settimanale7;
-epsilon_settimanale8 = dati_modello - y_settimanale8;
 
 SSR_settimanale1 = epsilon_settimanale1'*epsilon_settimanale1;
 SSR_settimanale2 = epsilon_settimanale2'*epsilon_settimanale2;
 SSR_settimanale3 = epsilon_settimanale3'*epsilon_settimanale3;
 SSR_settimanale4 = epsilon_settimanale4'*epsilon_settimanale4;
-SSR_settimanale5 = epsilon_settimanale5'*epsilon_settimanale5;
-SSR_settimanale6 = epsilon_settimanale6'*epsilon_settimanale6;
-SSR_settimanale7 = epsilon_settimanale7'*epsilon_settimanale7;
-SSR_settimanale8 = epsilon_settimanale8'*epsilon_settimanale8;
 
 y_fin1 = y_annuale1 + y_settimanale1;
 y_fin2 = y_annuale2 + y_settimanale2;
 y_fin3 = y_annuale3 + y_settimanale3;
 y_fin4 = y_annuale4 + y_settimanale4;
-y_fin5 = y_annuale5 + y_settimanale5;
-y_fin6 = y_annuale6 + y_settimanale6;
-y_fin7 = y_annuale7 + y_settimanale7;
-y_fin8 = y_annuale8 + y_settimanale8;
+% y_fin5 = y_annuale5 + y_settimanale5;
+% y_fin6 = y_annuale6 + y_settimanale6;
+% y_fin7 = y_annuale7 + y_settimanale7;
+% y_fin8 = y_annuale8 + y_settimanale8;
 
 figure(3)
-title('MODELLO PERIODICITÁ SETTIMANALE')
-xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
-grid on
-hold on
-plot(giorni_anno_modello, dati_modello)
-plot(y_fin8);
-
-figure(4)
 plot3(giorni_anno_modello, giorni_settimana_modello,dati_modello,'o')
 title("MODELLO 3D")
 xlabel('Giorno dell''anno')
@@ -248,7 +209,7 @@ ylabel('Giorno della settimana')
 zlabel('Consumo energetico [kw]')
 grid on
 hold on
-plot3(giorni_anno_modello, giorni_settimana_modello,y_fin8,'x')
+plot3(giorni_anno_modello, giorni_settimana_modello,y_fin4,'x')
 
 %% Test Validazione Modello Annuale
 %TEST FPE, AIC, MDL
@@ -308,26 +269,26 @@ SSR_validazione3 = epsilon_validazione3'*epsilon_validazione3;
 epsilon_validazione4 = dati_validazione - y_fin4;
 SSR_validazione4 = epsilon_validazione4'*epsilon_validazione4;
 
-epsilon_validazione5 = dati_validazione - y_fin5;
-SSR_validazione5 = epsilon_validazione5'*epsilon_validazione5;
+% epsilon_validazione5 = dati_validazione - y_fin5;
+% SSR_validazione5 = epsilon_validazione5'*epsilon_validazione5;
+% 
+% epsilon_validazione6 = dati_validazione - y_fin6;
+% SSR_validazione6 = epsilon_validazione6'*epsilon_validazione6;
+% 
+% epsilon_validazione7 = dati_validazione - y_fin7;
+% SSR_validazione7 = epsilon_validazione7'*epsilon_validazione7;
+% 
+% epsilon_validazione8 = dati_validazione - y_fin8;
+% SSR_validazione8 = epsilon_validazione8'*epsilon_validazione8;
 
-epsilon_validazione6 = dati_validazione - y_fin6;
-SSR_validazione6 = epsilon_validazione6'*epsilon_validazione6;
-
-epsilon_validazione7 = dati_validazione - y_fin7;
-SSR_validazione7 = epsilon_validazione7'*epsilon_validazione7;
-
-epsilon_validazione8 = dati_validazione - y_fin8;
-SSR_validazione8 = epsilon_validazione8'*epsilon_validazione8;
-
-figure(5);
+figure(4);
 title('VALIDAZIONE MODELLO PERIODICITÁ ANNUALE (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
 grid on
 hold on
 plot(giorni_anno_validazione, dati_validazione)
-plot(y_fin1);
+plot(y_fin4);
 
 %MODELLO 6 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
 
