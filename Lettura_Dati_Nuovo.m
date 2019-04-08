@@ -157,16 +157,6 @@ y_fin6 = y_annuale6 + y_validazione;
 y_fin7 = y_annuale7 + y_validazione;
 y_fin8 = y_annuale8 + y_validazione;
 
-% figure(3)
-% plot3(giorni_anno_modello, giorni_settimana_modello,dati_modello,'o')
-% title("MODELLO 3D")
-% xlabel('Giorno dell''anno')
-% ylabel('Giorno della settimana')
-% zlabel('Consumo energetico [kw]')
-% grid on
-% hold on
-% plot3(giorni_anno_modello, giorni_settimana_modello,y_fin4,'x')
-
 %TEST FPE, AIC, MDL
 q1 = length(ThetaLS_annuale1);
 fpe1 = SSR_annuale1*(n+q1)/(n-q1);
@@ -235,7 +225,7 @@ SSR_validazione7 = epsilon_validazione7'*epsilon_validazione7;
 epsilon_validazione8 = dati_validazione - y_fin8;
 SSR_validazione8 = epsilon_validazione8'*epsilon_validazione8;
 
-figure(4);
+figure(2);
 title('VALIDAZIONE MODELLO PERIODICITÁ ANNUALE (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
@@ -245,4 +235,14 @@ plot(giorni_anno_validazione, dati_validazione)
 plot(y_fin8);
 
 %MODELLO 8 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
+
+% figure(3)
+% plot3(giorni_anno_modello, giorni_settimana_modello,dati_modello,'o')
+% title("MODELLO 3D")
+% xlabel('Giorno dell''anno')
+% ylabel('Giorno della settimana')
+% zlabel('Consumo energetico [kw]')
+% grid on
+% hold on
+% plot3(giorni_anno_modello, giorni_settimana_modello,y_fin4,'x')
 
