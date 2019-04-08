@@ -282,27 +282,43 @@ fpe6 = SSR_annuale6*(n+q6)/(n-q6);
 aic6 = 2*q6/n + log(SSR_annuale6);
 mdl6 = log(n)*q6/n + log(SSR_annuale6);
 
+q7 = length(ThetaLS_annuale7);
+fpe7 = SSR_annuale7*(n+q7)/(n-q7);
+aic7 = 2*q7/n + log(SSR_annuale7);
+mdl7 = log(n)*q7/n + log(SSR_annuale7);
+
+q8 = length(ThetaLS_annuale8);
+fpe8 = SSR_annuale8*(n+q8)/(n-q8);
+aic8 = 2*q8/n + log(SSR_annuale8);
+mdl8 = log(n)*q8/n + log(SSR_annuale8);
+
 %MODELLO 3 SEMBRA IL MIGLIORE PER TUTTI I CRITERI, MA BISOGNA CONTROLLARE
 %DAL 5 IN POI POICHÉ DECRESCE
 
 %CROSSVALIDAZIONE
-epsilon_validazione1 = dati_validazione - y_annuale1;
+epsilon_validazione1 = dati_validazione - y_fin1;
 SSR_validazione1 = epsilon_validazione1'*epsilon_validazione1;
 
-epsilon_validazione2 = dati_validazione - y_annuale2;
+epsilon_validazione2 = dati_validazione - y_fin2;
 SSR_validazione2 = epsilon_validazione2'*epsilon_validazione2;
 
-epsilon_validazione3 = dati_validazione - y_annuale3;
+epsilon_validazione3 = dati_validazione - y_fin3;
 SSR_validazione3 = epsilon_validazione3'*epsilon_validazione3;
 
-epsilon_validazione4 = dati_validazione - y_annuale4;
+epsilon_validazione4 = dati_validazione - y_fin4;
 SSR_validazione4 = epsilon_validazione4'*epsilon_validazione4;
 
-epsilon_validazione5 = dati_validazione - y_annuale5;
+epsilon_validazione5 = dati_validazione - y_fin5;
 SSR_validazione5 = epsilon_validazione5'*epsilon_validazione5;
 
-epsilon_validazione6 = dati_validazione - y_annuale6;
+epsilon_validazione6 = dati_validazione - y_fin6;
 SSR_validazione6 = epsilon_validazione6'*epsilon_validazione6;
+
+epsilon_validazione7 = dati_validazione - y_fin7;
+SSR_validazione7 = epsilon_validazione7'*epsilon_validazione7;
+
+epsilon_validazione8 = dati_validazione - y_fin8;
+SSR_validazione8 = epsilon_validazione8'*epsilon_validazione8;
 
 figure(5);
 title('VALIDAZIONE MODELLO PERIODICITÁ ANNUALE (SU DATI SECONDO ANNO)')
@@ -311,7 +327,7 @@ ylabel("Consumo energetico [kw]");
 grid on
 hold on
 plot(giorni_anno_validazione, dati_validazione)
-plot(y_annuale6);
+plot(y_fin1);
 
 %MODELLO 6 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
 
