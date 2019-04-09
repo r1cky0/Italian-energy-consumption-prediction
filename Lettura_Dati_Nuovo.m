@@ -246,3 +246,8 @@ plot(y_fin8);
 % hold on
 % plot3(giorni_anno_modello, giorni_settimana_modello,y_fin4,'x')
 
+% %% Plot con mesh
+% giorni_anno_ext = linspace(min(giorni_anno_validazione),max(giorni_anno_validazione), 100);
+% giorni_settimana_ext = linspace(min(giorni_settimana_validazione), max(giorni_settimana_validazione), 100);
+% [GA,GS] = meshgrid(giorni_anno_ext, giorni_settimana_ext);
+
