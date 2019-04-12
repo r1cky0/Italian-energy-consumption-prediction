@@ -20,8 +20,10 @@ end
 
 %PLOT DI TUTTI I DATI
 figure(1)
+title('DATI')
+xlabel("Giorno anno");
+ylabel("Consumo energetico [kw]");
 plot(dati)
-title('Dati letti')
 grid on
 
 %DATI PER MODELLO(PRIMO ANNO)
@@ -34,15 +36,36 @@ giorni_anno_validazione = giorni_anni(366:730);
 giorni_settimana_validazione = giorni_settimana(366:730);
 dati_validazione = dati(366:730);
 
-%% MODELLI 
-%MODELLO PERIODICITÁ SETTIMANALE
+figure(2)
+title('TREND')
+xlabel("Giorno anno");
+ylabel("Consumo energetico [kw]");
+plot(dati_modello)
+hold on
+
+%% DETRENDIZZAZIONE DATI
 uni = ones(365,1);
 n = length(uni);
+
+Phi_trend = [uni giorni_anno_modello];
+
+ThetaLS_trend = Phi_trend\dati_modello;
+
+y_trend = Phi_trend * ThetaLS_trend;
+
+dati_modello = dati_modello - y_trend;
+dati_validazione = dati_validazione - y_trend;
+
+plot(y_trend)
+grid on
+
+%% MODELLI 
+%MODELLO PERIODICITÁ SETTIMANALE
 
 %Il periodo é di 7 giorni
 w_settimanale = 2*pi/7;
 
-Phi_settimanale = [uni cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
+Phi_settimanale = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
     cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
     cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello)];
 
@@ -122,6 +145,31 @@ Phi_annuale10 = [cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_mo
     cos(9*w_annuale*giorni_anno_modello) sin(9*w_annuale*giorni_anno_modello) ...
     cos(10*w_annuale*giorni_anno_modello) sin(10*w_annuale*giorni_anno_modello)];
 
+Phi_annuale11 = [cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello) ... 
+    cos(2*w_annuale*giorni_anno_modello) sin(2*w_annuale*giorni_anno_modello) ... 
+    cos(3*w_annuale*giorni_anno_modello) sin(3*w_annuale*giorni_anno_modello) ...
+    cos(4*w_annuale*giorni_anno_modello) sin(4*w_annuale*giorni_anno_modello) ...
+    cos(5*w_annuale*giorni_anno_modello) sin(5*w_annuale*giorni_anno_modello) ...
+    cos(6*w_annuale*giorni_anno_modello) sin(6*w_annuale*giorni_anno_modello) ...
+    cos(7*w_annuale*giorni_anno_modello) sin(7*w_annuale*giorni_anno_modello) ...
+    cos(8*w_annuale*giorni_anno_modello) sin(8*w_annuale*giorni_anno_modello) ... 
+    cos(9*w_annuale*giorni_anno_modello) sin(9*w_annuale*giorni_anno_modello) ...
+    cos(10*w_annuale*giorni_anno_modello) sin(10*w_annuale*giorni_anno_modello) ...
+    cos(11*w_annuale*giorni_anno_modello) sin(11*w_annuale*giorni_anno_modello)];
+
+Phi_annuale12 = [cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello) ... 
+    cos(2*w_annuale*giorni_anno_modello) sin(2*w_annuale*giorni_anno_modello) ... 
+    cos(3*w_annuale*giorni_anno_modello) sin(3*w_annuale*giorni_anno_modello) ...
+    cos(4*w_annuale*giorni_anno_modello) sin(4*w_annuale*giorni_anno_modello) ...
+    cos(5*w_annuale*giorni_anno_modello) sin(5*w_annuale*giorni_anno_modello) ...
+    cos(6*w_annuale*giorni_anno_modello) sin(6*w_annuale*giorni_anno_modello) ...
+    cos(7*w_annuale*giorni_anno_modello) sin(7*w_annuale*giorni_anno_modello) ...
+    cos(8*w_annuale*giorni_anno_modello) sin(8*w_annuale*giorni_anno_modello) ... 
+    cos(9*w_annuale*giorni_anno_modello) sin(9*w_annuale*giorni_anno_modello) ...
+    cos(10*w_annuale*giorni_anno_modello) sin(10*w_annuale*giorni_anno_modello) ...
+    cos(11*w_annuale*giorni_anno_modello) sin(11*w_annuale*giorni_anno_modello) ...
+    cos(12*w_annuale*giorni_anno_modello) sin(12*w_annuale*giorni_anno_modello)];
+
 %Y=Phi * Theta ---> Essendo matrici: Theta = Phi inversa * Y
 ThetaLS_annuale1 = Phi_annuale1\epsilon_settimanale;
 ThetaLS_annuale2 = Phi_annuale2\epsilon_settimanale;
@@ -133,6 +181,8 @@ ThetaLS_annuale7 = Phi_annuale7\epsilon_settimanale;
 ThetaLS_annuale8 = Phi_annuale8\epsilon_settimanale;
 ThetaLS_annuale9 = Phi_annuale9\epsilon_settimanale;
 ThetaLS_annuale10 = Phi_annuale10\epsilon_settimanale;
+ThetaLS_annuale11 = Phi_annuale11\epsilon_settimanale;
+ThetaLS_annuale12 = Phi_annuale12\epsilon_settimanale;
 %ThetaLS modellizza i coefficienti a0, an, bn con n che va da 1 al grado
 %scelto per la serie(ovvero il numero di armoniche)
 
@@ -146,6 +196,8 @@ y_annuale7= Phi_annuale7 * ThetaLS_annuale7;
 y_annuale8= Phi_annuale8 * ThetaLS_annuale8;
 y_annuale9= Phi_annuale9* ThetaLS_annuale9;
 y_annuale10= Phi_annuale10* ThetaLS_annuale10;
+y_annuale11= Phi_annuale11* ThetaLS_annuale11;
+y_annuale12= Phi_annuale12* ThetaLS_annuale12;
 
 epsilon_annuale1 = dati_modello - y_annuale1;
 epsilon_annuale2 = dati_modello - y_annuale2;
@@ -157,6 +209,8 @@ epsilon_annuale7 = dati_modello - y_annuale7;
 epsilon_annuale8 = dati_modello - y_annuale8;
 epsilon_annuale9 = dati_modello - y_annuale9;
 epsilon_annuale10 = dati_modello - y_annuale10;
+epsilon_annuale11 = dati_modello - y_annuale11;
+epsilon_annuale12 = dati_modello - y_annuale12;
 
 SSR_annuale1 = epsilon_annuale1'*epsilon_annuale1;
 SSR_annuale2 = epsilon_annuale2'*epsilon_annuale2;
@@ -168,10 +222,12 @@ SSR_annuale7 = epsilon_annuale7'*epsilon_annuale7;
 SSR_annuale8 = epsilon_annuale8'*epsilon_annuale8;
 SSR_annuale9 = epsilon_annuale9'*epsilon_annuale9;
 SSR_annuale10 = epsilon_annuale10'*epsilon_annuale10;
+SSR_annuale11 = epsilon_annuale11'*epsilon_annuale11;
+SSR_annuale12 = epsilon_annuale12'*epsilon_annuale12;
 
 %% VALIDAZIONE
 %PHI VALIDAZIONE
-Phi_validazione = [uni cos(w_settimanale*giorni_settimana_validazione) sin(w_settimanale*giorni_settimana_validazione) ...
+Phi_validazione = [cos(w_settimanale*giorni_settimana_validazione) sin(w_settimanale*giorni_settimana_validazione) ...
     cos(2*w_settimanale*giorni_settimana_validazione) sin(2*w_settimanale*giorni_settimana_validazione) ...
     cos(3*w_settimanale*giorni_settimana_validazione) sin(3*w_settimanale*giorni_settimana_validazione)];
 
@@ -190,57 +246,46 @@ y_fin7 = y_annuale7 + y_validazione;
 y_fin8 = y_annuale8 + y_validazione;
 y_fin9 = y_annuale9 + y_validazione;
 y_fin10 = y_annuale10 + y_validazione;
+y_fin11 = y_annuale11 + y_validazione;
+y_fin12 = y_annuale12 + y_validazione;
 
-%TEST FPE, AIC, MDL
+%TEST AIC
 q1 = length(ThetaLS_annuale1);
-fpe1 = SSR_annuale1*(n+q1)/(n-q1);
 aic1 = 2*q1/n + log(SSR_annuale1);
-mdl1 = log(n)*q1/n + log(SSR_annuale1);
 
 q2 = length(ThetaLS_annuale2);
-fpe2 = SSR_annuale2*(n+q2)/(n-q2);
 aic2 = 2*q2/n + log(SSR_annuale2);
-mdl2 = log(n)*q2/n + log(SSR_annuale2);
 
 q3 = length(ThetaLS_annuale3);
-fpe3 = SSR_annuale3*(n+q3)/(n-q3);
 aic3 = 2*q3/n + log(SSR_annuale3);
-mdl3 = log(n)*q3/n + log(SSR_annuale3);
 
 q4 = length(ThetaLS_annuale4);
-fpe4 = SSR_annuale4*(n+q4)/(n-q4);
 aic4 = 2*q4/n + log(SSR_annuale4);
-mdl4 = log(n)*q4/n + log(SSR_annuale4);
 
 q5 = length(ThetaLS_annuale5);
-fpe5 = SSR_annuale5*(n+q5)/(n-q5);
 aic5 = 2*q5/n + log(SSR_annuale5);
-mdl5 = log(n)*q5/n + log(SSR_annuale5);
 
 q6 = length(ThetaLS_annuale6);
-fpe6 = SSR_annuale6*(n+q6)/(n-q6);
 aic6 = 2*q6/n + log(SSR_annuale6);
-mdl6 = log(n)*q6/n + log(SSR_annuale6);
 
 q7 = length(ThetaLS_annuale7);
-fpe7 = SSR_annuale7*(n+q7)/(n-q7);
 aic7 = 2*q7/n + log(SSR_annuale7);
-mdl7 = log(n)*q7/n + log(SSR_annuale7);
 
 q8 = length(ThetaLS_annuale8);
-fpe8 = SSR_annuale8*(n+q8)/(n-q8);
 aic8 = 2*q8/n + log(SSR_annuale8);
-mdl8 = log(n)*q8/n + log(SSR_annuale8);
 
 q9 = length(ThetaLS_annuale9);
-fpe9 = SSR_annuale9*(n+q9)/(n-q9);
 aic9 = 2*q9/n + log(SSR_annuale9);
-mdl9 = log(n)*q9/n + log(SSR_annuale9);
 
 q10 = length(ThetaLS_annuale10);
-fpe10 = SSR_annuale10*(n+q10)/(n-q10);
 aic10 = 2*q10/n + log(SSR_annuale10);
-mdl10 = log(n)*q10/n + log(SSR_annuale10);
+
+q11 = length(ThetaLS_annuale11);
+aic11 = 2*q11/n + log(SSR_annuale11);
+
+q12 = length(ThetaLS_annuale12);
+aic12 = 2*q12/n + log(SSR_annuale12);
+
 
 %CROSSVALIDAZIONE
 epsilon_validazione1 = dati_validazione - y_fin1;
@@ -273,18 +318,24 @@ SSR_validazione9 = epsilon_validazione9'*epsilon_validazione9;
 epsilon_validazione10 = dati_validazione - y_fin10;
 SSR_validazione10 = epsilon_validazione10'*epsilon_validazione10;
 
-figure(2);
-title('VALIDAZIONE MODELLO PERIODICITÁ ANNUALE (SU DATI SECONDO ANNO)')
+epsilon_validazione11 = dati_validazione - y_fin11;
+SSR_validazione11 = epsilon_validazione11'*epsilon_validazione11;
+
+epsilon_validazione12 = dati_validazione - y_fin12;
+SSR_validazione12 = epsilon_validazione12'*epsilon_validazione12;
+
+figure(3);
+title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
-grid on
 hold on
+grid on
 plot(giorni_anno_validazione, dati_validazione)
 plot(y_fin10);
 
-%MODELLO 8 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
+%MODELLO 10 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
 
-% figure(3)
+% figure(4)
 % plot3(giorni_anno_modello, giorni_settimana_modello,dati_modello,'o')
 % title("MODELLO 3D")
 % xlabel('Giorno dell''anno')
@@ -292,8 +343,8 @@ plot(y_fin10);
 % zlabel('Consumo energetico [kw]')
 % grid on
 % hold on
-% plot3(giorni_anno_modello, giorni_settimana_modello,y_fin4,'x')
-
+% plot3(giorni_anno_modello, giorni_settimana_modello,y_fin10,'x')
+% 
 % %% Plot con mesh
 % giorni_anno_ext = linspace(min(giorni_anno_validazione),max(giorni_anno_validazione), 100);
 % giorni_settimana_ext = linspace(min(giorni_settimana_validazione), max(giorni_settimana_validazione), 100);
