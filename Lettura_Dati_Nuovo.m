@@ -20,10 +20,10 @@ end
 
 %PLOT DI TUTTI I DATI
 figure(1)
-title('DATI')
+plot(dati)
+title("DATI")
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
-plot(dati)
 grid on
 
 %DATI PER MODELLO(PRIMO ANNO)
@@ -37,10 +37,10 @@ giorni_settimana_validazione = giorni_settimana(366:730);
 dati_validazione = dati(366:730);
 
 figure(2)
-title('TREND')
+plot(dati_modello)
+title("TREND")
 xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
-plot(dati_modello)
 hold on
 
 %% DETRENDIZZAZIONE DATI
