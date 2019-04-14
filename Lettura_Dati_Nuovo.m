@@ -44,6 +44,7 @@ ylabel("Consumo energetico [kw]");
 hold on
 
 %% DETRENDIZZAZIONE DATI
+%Togliamo il trend per "limare" gli errori e rendere migliore l' andamento
 uni = ones(365,1);
 n = length(uni);
 
@@ -61,10 +62,13 @@ grid on
 
 %% MODELLI 
 %MODELLO PERIODICITÁ SETTIMANALE
+% Nelle serie di fourier abbiamo sin(n*w*x) e cos(n*w*x) dove w=2pi/Periodo
+% ed n é il grado
 
 %Il periodo é di 7 giorni
 w_settimanale = 2*pi/7;
 
+%Avendo detrendizzato, non serve piú fare la prima colonna di uni
 Phi_settimanale = [cos(w_settimanale*giorni_settimana_modello) sin(w_settimanale*giorni_settimana_modello) ...
     cos(2*w_settimanale*giorni_settimana_modello) sin(2*w_settimanale*giorni_settimana_modello) ...
     cos(3*w_settimanale*giorni_settimana_modello) sin(3*w_settimanale*giorni_settimana_modello)];
@@ -76,8 +80,6 @@ y_settimanale= Phi_settimanale * ThetaLS_settimanale;
 epsilon_settimanale = dati_modello - y_settimanale;
 
 %MODELLO PERIODICITÁ ANNUALE
-% %Nelle serie di fourier abbiamo sin(n*w*x) e cos(n*w*x) dove w=2pi/Periodo
-% %e n é il grado
 w_annuale = 2*pi/365;
 
 Phi_annuale1 = [cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_modello)];
@@ -285,7 +287,6 @@ aic11 = 2*q11/n + log(SSR_annuale11);
 
 q12 = length(ThetaLS_annuale12);
 aic12 = 2*q12/n + log(SSR_annuale12);
-
 
 %CROSSVALIDAZIONE
 epsilon_validazione1 = dati_validazione - y_fin1;
