@@ -26,6 +26,31 @@ xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
 grid on
 
+figure(2)
+plot(dati)
+title("TREND")
+xlabel("Giorno anno");
+ylabel("Consumo energetico [kw]");
+hold on
+
+%% DETRENDIZZAZIONE DATI
+%Togliamo il trend per "limare" gli errori e rendere migliore l' andamento
+uni = ones(730,1);
+n = length(uni);
+
+giorni = (1:730)';
+
+Phi_trend = [uni giorni];
+
+ThetaLS_trend = Phi_trend\dati;
+
+y_trend = Phi_trend * ThetaLS_trend;
+
+dati = dati - y_trend;
+
+plot(y_trend)
+grid on
+
 %DATI PER MODELLO(PRIMO ANNO)
 giorni_anno_modello = giorni_anni(1:365);
 giorni_settimana_modello = giorni_settimana(1:365);
@@ -35,30 +60,6 @@ dati_modello = dati(1:365);
 giorni_anno_validazione = giorni_anni(366:730);
 giorni_settimana_validazione = giorni_settimana(366:730);
 dati_validazione = dati(366:730);
-
-figure(2)
-plot(dati_modello)
-title("TREND")
-xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
-hold on
-
-%% DETRENDIZZAZIONE DATI
-%Togliamo il trend per "limare" gli errori e rendere migliore l' andamento
-uni = ones(365,1);
-n = length(uni);
-
-Phi_trend = [uni giorni_anno_modello];
-
-ThetaLS_trend = Phi_trend\dati_modello;
-
-y_trend = Phi_trend * ThetaLS_trend;
-
-dati_modello = dati_modello - y_trend;
-dati_validazione = dati_validazione - y_trend;
-
-plot(y_trend)
-grid on
 
 %% MODELLI 
 %MODELLO PERIODICITÁ SETTIMANALE
