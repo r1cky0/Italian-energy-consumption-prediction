@@ -394,4 +394,3 @@ hold on
 mesh (GA, GS, y_ext_matrice);
 
 
-
