@@ -38,7 +38,7 @@ hold on
 uni = ones(730,1);
 n = length(uni);
 
-giorni = (1:730)';
+giorni = [1:730]';
 
 Phi_trend = [uni giorni];
 
@@ -337,18 +337,61 @@ plot(y_fin10);
 
 %MODELLO 10 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
 
-% figure(4)
-% plot3(giorni_anno_modello, giorni_settimana_modello,dati_modello,'o')
-% title("MODELLO 3D")
-% xlabel('Giorno dell''anno')
-% ylabel('Giorno della settimana')
-% zlabel('Consumo energetico [kw]')
-% grid on
-% hold on
-% plot3(giorni_anno_modello, giorni_settimana_modello,y_fin10,'x')
-% 
-% %% Plot con mesh
-% giorni_anno_ext = linspace(min(giorni_anno_validazione),max(giorni_anno_validazione), 100);
-% giorni_settimana_ext = linspace(min(giorni_settimana_validazione), max(giorni_settimana_validazione), 100);
-% [GA,GS] = meshgrid(giorni_anno_ext, giorni_settimana_ext);
+%% MODELLO TOTALE
+Phi_totale = [Phi_settimanale Phi_annuale10];
+
+ThetaLS_totale = Phi_totale\dati_modello;
+
+y_totale = Phi_totale * ThetaLS_totale;
+
+Phi_tot_val = [Phi_validazione Phi_annuale10];
+
+y_tot_fin = Phi_tot_val * ThetaLS_totale;
+
+figure(4);
+title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
+xlabel("Giorno anno");
+ylabel("Consumo energetico [kw]");
+hold on
+grid on
+plot(giorni_anno_validazione, dati_validazione)
+plot(y_tot_fin);
+
+epsilon_tot_val = dati_validazione - y_tot_fin;
+SSR_tot_val = (epsilon_tot_val') * epsilon_tot_val;
+
+%% PLOT 3D
+
+g = [1:7]';
+[GA,GS] = meshgrid(giorni_anno_modello, g);
+
+Phi_ext = [cos(w_settimanale*GS(:)) sin(w_settimanale*GS(:)) ...
+    cos(2*w_settimanale*GS(:)) sin(2*w_settimanale*GS(:)) ...
+    cos(3*w_settimanale*GS(:)) sin(3*w_settimanale*GS(:)) ...
+    cos(w_annuale*GA(:)) sin(w_annuale*GA(:)) ... 
+    cos(2*w_annuale*GA(:)) sin(2*w_annuale*GA(:)) ... 
+    cos(3*w_annuale*GA(:)) sin(3*w_annuale*GA(:)) ...
+    cos(4*w_annuale*GA(:)) sin(4*w_annuale*GA(:)) ...
+    cos(5*w_annuale*GA(:)) sin(5*w_annuale*GA(:)) ...
+    cos(6*w_annuale*GA(:)) sin(6*w_annuale*GA(:)) ...
+    cos(7*w_annuale*GA(:)) sin(7*w_annuale*GA(:)) ...
+    cos(8*w_annuale*GA(:)) sin(8*w_annuale*GA(:)) ... 
+    cos(9*w_annuale*GA(:)) sin(9*w_annuale*GA(:)) ...
+    cos(10*w_annuale*GA(:)) sin(10*w_annuale*GA(:))];
+
+y_ext = Phi_ext * ThetaLS_totale;
+
+y_ext_matrice = reshape(y_ext, size(GA));
+
+figure(5)
+plot3(giorni_anno_validazione, giorni_settimana_validazione,dati_validazione,'o')
+title("MODELLO 3D")
+xlabel('Giorno dell''anno')
+ylabel('Giorno della settimana')
+zlabel('Consumo energetico [kw]')
+grid on
+hold on
+mesh (GA, GS, y_ext_matrice);
+
+
 
