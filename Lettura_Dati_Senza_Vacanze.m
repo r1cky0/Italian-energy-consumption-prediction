@@ -37,26 +37,26 @@ anno_modello = giorni_anni(1:365);
 anno_vacanza = cat(1, anno_modello(1:6),anno_modello(223:230), ...
                         anno_modello(357:365));
 
-anno_modello = cat(1, anno_modello(7:210),anno_modello(231:356));
+anno_modello = cat(1, anno_modello(7:213),anno_modello(226:356));
 
 settimana_modello = giorni_settimana(1:365);
 settimana_vacanza = cat(1, settimana_modello(1:6),settimana_modello(223:230), ...
                             settimana_modello(357:365));
 
-settimana_modello = cat(1, settimana_modello(7:210),settimana_modello(231:356));
+settimana_modello = cat(1, settimana_modello(7:213),settimana_modello(226:356));
 
 dati_modello = dati(1:365);
-dati_modello = cat(1, dati_modello(7:210),dati_modello(231:356));
+dati_modello = cat(1, dati_modello(7:213),dati_modello(226:356));
 
 %DATI PER VALIDAZIONE(SECONDO ANNO)
 anno_validazione = giorni_anni(366:730);
-anno_val_xSSR = cat(1, anno_validazione(7:210),anno_validazione(231:356));
+anno_val_xSSR = cat(1, anno_validazione(7:213),anno_validazione(226:356));
 
 settimana_validazione = giorni_settimana(366:730);
-settimana_val_xSSR = cat(1, settimana_validazione(7:210),settimana_validazione(231:356));
+settimana_val_xSSR = cat(1, settimana_validazione(7:213),settimana_validazione(226:356));
 
 dati_validazione = dati(366:730);
-dati_validazione_xSSR = cat(1, dati_validazione(7:210),dati_validazione(231:356));
+dati_validazione_xSSR = cat(1, dati_validazione(7:213),dati_validazione(226:356));
 
 %% MODELLO
 w_settimanale = 2*pi/7;
