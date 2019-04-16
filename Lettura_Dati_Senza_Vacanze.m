@@ -34,19 +34,29 @@ dati = dati - y_trend;
 
 %DATI PER MODELLO(PRIMO ANNO)
 giorni_anno_modello = giorni_anni(1:365);
-giorni_anno_modello = cat(1, giorni_anno_modello(7:217),giorni_anno_modello(231:356));
+giorni_anno_vacanza = cat(1, giorni_anno_modello(1:6),giorni_anno_modello(223:230), ...
+                        giorni_anno_modello(357:365));
+
+giorni_anno_modello = cat(1, giorni_anno_modello(7:210),giorni_anno_modello(231:356));
+
 giorni_settimana_modello = giorni_settimana(1:365);
-giorni_settimana_modello = cat(1, giorni_settimana_modello(7:217),giorni_settimana_modello(231:356));
+giorni_settimana_vacanza = cat(1, giorni_settimana_modello(1:6),giorni_settimana_modello(223:230), ...
+                            giorni_settimana_modello(357:365));
+
+giorni_settimana_modello = cat(1, giorni_settimana_modello(7:210),giorni_settimana_modello(231:356));
+
 dati_modello = dati(1:365);
-dati_modello = cat(1, dati_modello(7:217),dati_modello(231:356));
+dati_modello = cat(1, dati_modello(7:210),dati_modello(231:356));
 
 %DATI PER VALIDAZIONE(SECONDO ANNO)
-giorni_anno_validazione_tot = giorni_anni(366:730);
-giorni_anno_val_corti = cat(1, giorni_anno_validazione_tot(7:217),giorni_anno_validazione_tot(231:356));
-giorni_settimana_validazione_tot = giorni_settimana(366:730);
-giorni_set_val_corti = cat(1, giorni_settimana_validazione_tot(7:217),giorni_settimana_validazione_tot(231:356));
+giorni_anno_validazione = giorni_anni(366:730);
+giorni_anno_val = cat(1, giorni_anno_validazione(7:210),giorni_anno_validazione(231:356));
+
+giorni_settimana_validazione = giorni_settimana(366:730);
+giorni_settimana_val = cat(1, giorni_settimana_validazione(7:210),giorni_settimana_validazione(231:356));
+
 dati_validazione = dati(366:730);
-dati_validaione_corti = cat(1, dati_validazione(7:217),dati_validazione(231:356));
+dati_validazione_xSSR = cat(1, dati_validazione(7:210),dati_validazione(231:356));
 
 %% MODELLO
 w_settimanale = 2*pi/7;
@@ -67,17 +77,32 @@ Phi_annuale = [cos(w_annuale*giorni_anno_modello) sin(w_annuale*giorni_anno_mode
     cos(9*w_annuale*giorni_anno_modello) sin(9*w_annuale*giorni_anno_modello) ...
     cos(10*w_annuale*giorni_anno_modello) sin(10*w_annuale*giorni_anno_modello)];
 
-Phi_validazione = [cos(w_settimanale*giorni_set_val_corti) sin(w_settimanale*giorni_set_val_corti) ...
-    cos(2*w_settimanale*giorni_set_val_corti) sin(2*w_settimanale*giorni_set_val_corti) ...
-    cos(3*w_settimanale*giorni_set_val_corti) sin(3*w_settimanale*giorni_set_val_corti)];
+Phi_sett_validazione_xSSR = [cos(w_settimanale*giorni_settimana_val) ...
+    sin(w_settimanale*giorni_settimana_val) ...
+    cos(2*w_settimanale*giorni_settimana_val) ...
+    sin(2*w_settimanale*giorni_settimana_val) ...
+    cos(3*w_settimanale*giorni_settimana_val) ...
+    sin(3*w_settimanale*giorni_settimana_val)];
+
+Phi_ann_validazione_xSSR = [cos(w_annuale*giorni_anno_val) ...
+    sin(w_annuale*giorni_anno_val) ... 
+    cos(2*w_annuale*giorni_anno_val) sin(2*w_annuale*giorni_anno_val) ... 
+    cos(3*w_annuale*giorni_anno_val) sin(3*w_annuale*giorni_anno_val) ...
+    cos(4*w_annuale*giorni_anno_val) sin(4*w_annuale*giorni_anno_val) ...
+    cos(5*w_annuale*giorni_anno_val) sin(5*w_annuale*giorni_anno_val) ...
+    cos(6*w_annuale*giorni_anno_val) sin(6*w_annuale*giorni_anno_val) ...
+    cos(7*w_annuale*giorni_anno_val) sin(7*w_annuale*giorni_anno_val) ...
+    cos(8*w_annuale*giorni_anno_val) sin(8*w_annuale*giorni_anno_val) ... 
+    cos(9*w_annuale*giorni_anno_val) sin(9*w_annuale*giorni_anno_val) ...
+    cos(10*w_annuale*giorni_anno_val) sin(10*w_annuale*giorni_anno_val)];
 
 Phi_totale = [Phi_settimanale Phi_annuale];
 
 ThetaLS_totale = Phi_totale\dati_modello;
 
-y_totale = Phi_totale * ThetaLS_totale;
+y_modello = Phi_totale * ThetaLS_totale;
 
-Phi_tot_val = [Phi_validazione Phi_annuale];
+Phi_tot_val = [Phi_sett_validazione_xSSR Phi_ann_validazione_xSSR];
 
 y_tot_fin = Phi_tot_val * ThetaLS_totale;
 
@@ -87,8 +112,8 @@ xlabel("Giorno anno");
 ylabel("Consumo energetico [kw]");
 hold on
 grid on
-plot(dati_modello)
-plot(y_totale);
+plot(dati_validazione_xSSR)
+plot(y_tot_fin);
 
-epsilon_tot_val = dati_validaione_corti - y_tot_fin;
+epsilon_tot_val = dati_validazione_xSSR - y_tot_fin;
 SSR_tot_val = (epsilon_tot_val') * epsilon_tot_val;
