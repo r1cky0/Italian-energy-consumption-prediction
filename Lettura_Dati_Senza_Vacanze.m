@@ -1,4 +1,4 @@
-clc 
+ clc 
 close all
 clear all
 
@@ -35,7 +35,7 @@ dati = dati - y_trend;
 %DATI PER MODELLO(PRIMO ANNO)
 anno_modello = giorni_anni(1:365);
 anno_vacanza = cat(1, anno_modello(1:6),anno_modello(223:230), ...
-                        anno_modello(357:365));
+                        anno_modello(357:365));   
 
 anno_modello = cat(1, anno_modello(7:213),anno_modello(226:356));
 

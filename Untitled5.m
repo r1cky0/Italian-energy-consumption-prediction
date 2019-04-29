@@ -1,4 +1,4 @@
-tab = readtable('arr.xlsx', 'Range', 'A2:C732');
+tab = readtable('caricoITAday.xlsx', 'Range', 'A2:C732');
 giorni_anni = tab.giorno_anno;
 giorni_settimana= tab.giorno_settimana;
 dati = tab.dati;
