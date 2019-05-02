@@ -48,31 +48,31 @@ else
     x = 1;
 end
     
-giorni_settimana_validazione = [];
+giorni_settimana_predizione = [];
 
 for j=x:1:7
-    giorni_settimana_validazione = cat(1,giorni_settimana_validazione,j);
+    giorni_settimana_predizione = cat(1,giorni_settimana_predizione,j);
 end
 
 for i=1:1:51
     for j=1:1:7
-        giorni_settimana_validazione = cat(1,giorni_settimana_validazione,j);
+        giorni_settimana_predizione = cat(1,giorni_settimana_predizione,j);
     end
 end
 
-y = 365 - size(giorni_settimana_validazione);
+y = 365 - size(giorni_settimana_predizione);
 
 for j=1:1:y
-    giorni_settimana_validazione = cat(1,giorni_settimana_validazione,j);
+    giorni_settimana_predizione = cat(1,giorni_settimana_predizione,j);
 end
 
-Phi_sett_val = [cos(w_settimanale*giorni_settimana_validazione) sin(w_settimanale*giorni_settimana_validazione) ...
-    cos(2*w_settimanale*giorni_settimana_validazione) sin(2*w_settimanale*giorni_settimana_validazione) ...
-    cos(3*w_settimanale*giorni_settimana_validazione) sin(3*w_settimanale*giorni_settimana_validazione)];
+Phi_sett_predizione = [cos(w_settimanale*giorni_settimana_predizione) sin(w_settimanale*giorni_settimana_predizione) ...
+    cos(2*w_settimanale*giorni_settimana_predizione) sin(2*w_settimanale*giorni_settimana_predizione) ...
+    cos(3*w_settimanale*giorni_settimana_predizione) sin(3*w_settimanale*giorni_settimana_predizione)];
 
-Phi_validazione = [Phi_sett_val Phi_annuale];
+Phi_predizione = [Phi_sett_predizione Phi_annuale];
 
-dati_previsione = Phi_validazione * ThetaLS;
+dati_previsione = Phi_predizione * ThetaLS;
 
 y_trend2 = [];
 
