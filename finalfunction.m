@@ -41,7 +41,9 @@ Phi = [Phi_settimanale Phi_annuale];
 
 ThetaLS = Phi\dati;
 
-%PHI VALIDAZIONE
+%% PHI VALIDAZIONE
+%Creiamo il vettore dei giorni della settimana basandoci sull' anno
+%precedente
 if giorni_settimana(365) ~= 7
     x = giorni_settimana(365) + 1;
 else
