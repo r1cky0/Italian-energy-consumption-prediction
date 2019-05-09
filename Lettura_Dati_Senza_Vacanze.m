@@ -17,46 +17,48 @@ for i=1:1:size(dati)
     end
 end
 
+%DATI PER MODELLO(PRIMO ANNO)
+anno_modello = giorni_anni(1:365);
+
+settimana_modello = giorni_settimana(1:365);
+
+dati_modello = dati(1:365);
+                 
+%DATI PER VALIDAZIONE(SECONDO ANNO)
+anno_validazione = giorni_anni(366:730);
+
+settimana_validazione = giorni_settimana(366:730);
+
+dati_validazione = dati(366:730);
+
 %% DETRENDIZZAZIONE DATI
 %Togliamo il trend per "limare" gli errori e rendere migliore l' andamento
-uni = ones(730,1);
+uni = ones(365,1);
 n = length(uni);
 
-giorni = [1:730]';
+giorni = [1:365]';
 
 Phi_trend = [uni giorni];
 
-ThetaLS_trend = Phi_trend\dati;
+ThetaLS_trend = Phi_trend\dati_modello;
 
 y_trend = Phi_trend * ThetaLS_trend;
 
-dati = dati - y_trend;
+dati_modello = dati_modello - y_trend;
 
-%DATI PER MODELLO(PRIMO ANNO)
-anno_modello = giorni_anni(1:365);
-anno_vacanza = cat(1, anno_modello(1:6),anno_modello(223:230), ...
-                        anno_modello(357:365));   
-
+%% SELEZIONE DATI
 anno_modello = cat(1, anno_modello(7:213),anno_modello(226:356));
-
-settimana_modello = giorni_settimana(1:365);
-settimana_vacanza = cat(1, settimana_modello(1:6),settimana_modello(223:230), ...
-                            settimana_modello(357:365));
 
 settimana_modello = cat(1, settimana_modello(7:213),settimana_modello(226:356));
 
-dati_modello = dati(1:365);
+dati_natale = cat(1, dati_modello(1:6), dati_modello(357:365));
+dati_ferragosto = dati_modello(214:225);
+
+media_natale = mean(dati_natale);
+media_ferragosto = mean(dati_ferragosto);      
+
 dati_modello = cat(1, dati_modello(7:213),dati_modello(226:356));
 
-%DATI PER VALIDAZIONE(SECONDO ANNO)
-anno_validazione = giorni_anni(366:730);
-anno_val_xSSR = cat(1, anno_validazione(7:213),anno_validazione(226:356));
-
-settimana_validazione = giorni_settimana(366:730);
-settimana_val_xSSR = cat(1, settimana_validazione(7:213),settimana_validazione(226:356));
-
-dati_validazione = dati(366:730);
-dati_validazione_xSSR = cat(1, dati_validazione(7:213),dati_validazione(226:356));
 
 %% MODELLO
 w_settimanale = 2*pi/7;
@@ -96,38 +98,30 @@ Phi_ann_validazione = [cos(w_annuale*anno_validazione) ...
     cos(9*w_annuale*anno_validazione) sin(9*w_annuale*anno_validazione) ...
     cos(10*w_annuale*anno_validazione) sin(10*w_annuale*anno_validazione)];
 
-Phi_sett_validazione_xSSR = [cos(w_settimanale*settimana_val_xSSR) ...
-    sin(w_settimanale*settimana_val_xSSR) ...
-    cos(2*w_settimanale*settimana_val_xSSR) ...
-    sin(2*w_settimanale*settimana_val_xSSR) ...
-    cos(3*w_settimanale*settimana_val_xSSR) ...
-    sin(3*w_settimanale*settimana_val_xSSR)];
-
-Phi_ann_validazione_xSSR = [cos(w_annuale*anno_val_xSSR) ...
-    sin(w_annuale*anno_val_xSSR) ... 
-    cos(2*w_annuale*anno_val_xSSR) sin(2*w_annuale*anno_val_xSSR) ... 
-    cos(3*w_annuale*anno_val_xSSR) sin(3*w_annuale*anno_val_xSSR) ...
-    cos(4*w_annuale*anno_val_xSSR) sin(4*w_annuale*anno_val_xSSR) ...
-    cos(5*w_annuale*anno_val_xSSR) sin(5*w_annuale*anno_val_xSSR) ...
-    cos(6*w_annuale*anno_val_xSSR) sin(6*w_annuale*anno_val_xSSR) ...
-    cos(7*w_annuale*anno_val_xSSR) sin(7*w_annuale*anno_val_xSSR) ...
-    cos(8*w_annuale*anno_val_xSSR) sin(8*w_annuale*anno_val_xSSR) ... 
-    cos(9*w_annuale*anno_val_xSSR) sin(9*w_annuale*anno_val_xSSR) ...
-    cos(10*w_annuale*anno_val_xSSR) sin(10*w_annuale*anno_val_xSSR)];
-
 Phi_modello = [Phi_sett_modello Phi_ann_modello];
 
 ThetaLS = Phi_modello\dati_modello;
 
 y_modello = Phi_modello * ThetaLS;
 
-Phi_val_xSSR = [Phi_sett_validazione_xSSR Phi_ann_validazione_xSSR];
-
-y_val_xSSR = Phi_val_xSSR * ThetaLS;
-
 Phi_val = [Phi_sett_validazione Phi_ann_validazione];
 
 y_val = Phi_val * ThetaLS;
+
+for i=1:1:6
+    y_val(i) = y_val(i) + media_natale;
+end
+
+for i=357:1:365
+    y_val(i) = y_val(i) + media_natale;
+end
+
+for i=214:1:225
+    y_val(i) = y_val(i) + media_ferragosto;
+end
+
+ytrend2 = y_trend(365);
+y_val = y_val + ytrend2;
 
 figure(4);
 title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
@@ -138,8 +132,13 @@ grid on
 plot(dati_validazione)
 plot(y_val);
 
-epsilon_val_noVac = dati_validazione_xSSR - y_val_xSSR;
-SSR_val_noVac = (epsilon_val_noVac') * epsilon_val_noVac;
-
 epsilon_val = dati_validazione - y_val;
 SSR_val = (epsilon_val') * epsilon_val;
+
+figure(5)
+plot(epsilon_val)
+grid on
+
+figure(6)
+histogram(epsilon_val)
+grid on
