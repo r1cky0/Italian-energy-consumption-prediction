@@ -69,6 +69,15 @@ dati_previsione = dati_previsione + y_trend2;
 
 dati_previsione_mat = reshape(dati_previsione, size(GA));
 
+figure(5)
+title("MODELLO 3D")
+xlabel('Giorno dell''anno')
+ylabel('Giorno della settimana')
+zlabel('Consumo energetico [kw]')
+grid on
+hold on
+mesh (GA, GS, dati_previsione_mat);
+
 s_hat = dati_previsione_mat(w,d);
 
 end

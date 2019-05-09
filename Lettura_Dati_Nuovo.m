@@ -395,7 +395,14 @@ mesh (GA, GS, y_ext_matrice);
 
 figure(6)
 plot(epsilon_tot_val)
+title("EPSILON DI VALIDAZIONE")
+xlabel("Giorno dell'anno")
+ylabel("Entitá errore")
+grid on
 
 figure(7);
-histogram(epsilon_tot_val,15)
-
+histogram(epsilon_tot_val,20)
+title("EPSILON DI VALIDAZIONE")
+xlabel("Entitá errore")
+ylabel("Frequenza errore")
+grid on
