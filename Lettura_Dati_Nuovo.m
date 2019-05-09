@@ -393,4 +393,9 @@ grid on
 hold on
 mesh (GA, GS, y_ext_matrice);
 
+figure(7)
+plot(epsilon_tot_val)
+
+figure(6);
+histogram(epsilon_tot_val,15)
 
