@@ -18,6 +18,21 @@ y_trend = Phi_trend * ThetaLS_trend;
 
 dati = dati - y_trend;
 
+%% VACANZE
+giorni_anno = cat(1, giorni_anno(7:213),giorni_anno(226:356), ... 
+    giorni_anno(372:578),giorni_anno(591:721));
+
+giorni_settimana = cat(1, giorni_settimana(7:213),giorni_settimana(226:356), ...
+    giorni_settimana(372:578),giorni_settimana(591:721));
+
+dati_natale = cat(1, dati(1:6), dati(357:371), dati(722:730));
+dati_ferragosto = cat(1, dati(214:225), dati(579:590));
+
+media_natale = mean(dati_natale);
+media_ferragosto = mean(dati_ferragosto);      
+
+dati = cat(1, dati(7:213),dati(226:356), dati(372:578),dati(591:721));
+
 %% MODELLO
 w_settimanale = 2*pi/7;
 w_annuale = 2*pi/365;
@@ -69,14 +84,23 @@ dati_previsione = dati_previsione + y_trend2;
 
 dati_previsione_mat = reshape(dati_previsione, size(GA));
 
-figure(5)
-title("MODELLO 3D")
-xlabel('Giorno dell''anno')
-ylabel('Giorno della settimana')
-zlabel('Consumo energetico [kw]')
-grid on
-hold on
-mesh (GA, GS, dati_previsione_mat);
+for i=1:1:6
+    for j=1:1:7
+        dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_natale;
+    end
+end
+
+for i=214:1:225
+    for j=1:1:7
+        dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_ferragosto;
+    end
+end
+
+for i=357:1:365
+    for j=1:1:7
+        dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_natale;
+    end
+end
 
 s_hat = dati_previsione_mat(w,d);
 

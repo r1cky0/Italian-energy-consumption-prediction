@@ -1,4 +1,4 @@
- clc 
+clc 
 close all
 clear all
 
@@ -59,7 +59,6 @@ media_ferragosto = mean(dati_ferragosto);
 
 dati_modello = cat(1, dati_modello(7:213),dati_modello(226:356));
 
-
 %% MODELLO
 w_settimanale = 2*pi/7;
 w_annuale = 2*pi/365;
@@ -79,66 +78,66 @@ Phi_ann_modello = [cos(w_annuale*anno_modello) sin(w_annuale*anno_modello) ...
     cos(9*w_annuale*anno_modello) sin(9*w_annuale*anno_modello) ...
     cos(10*w_annuale*anno_modello) sin(10*w_annuale*anno_modello)];
 
-Phi_sett_validazione = [cos(w_settimanale*settimana_validazione) ...
-    sin(w_settimanale*settimana_validazione) ...
-    cos(2*w_settimanale*settimana_validazione) ...
-    sin(2*w_settimanale*settimana_validazione) ...
-    cos(3*w_settimanale*settimana_validazione) ...
-    sin(3*w_settimanale*settimana_validazione)];
+Phi = [Phi_sett_modello Phi_ann_modello];
 
-Phi_ann_validazione = [cos(w_annuale*anno_validazione) ...
-    sin(w_annuale*anno_validazione) ... 
-    cos(2*w_annuale*anno_validazione) sin(2*w_annuale*anno_validazione) ... 
-    cos(3*w_annuale*anno_validazione) sin(3*w_annuale*anno_validazione) ...
-    cos(4*w_annuale*anno_validazione) sin(4*w_annuale*anno_validazione) ...
-    cos(5*w_annuale*anno_validazione) sin(5*w_annuale*anno_validazione) ...
-    cos(6*w_annuale*anno_validazione) sin(6*w_annuale*anno_validazione) ...
-    cos(7*w_annuale*anno_validazione) sin(7*w_annuale*anno_validazione) ...
-    cos(8*w_annuale*anno_validazione) sin(8*w_annuale*anno_validazione) ... 
-    cos(9*w_annuale*anno_validazione) sin(9*w_annuale*anno_validazione) ...
-    cos(10*w_annuale*anno_validazione) sin(10*w_annuale*anno_validazione)];
+ThetaLS = Phi\dati_modello;
 
-Phi_modello = [Phi_sett_modello Phi_ann_modello];
+%% PLOT 3D
+s = [1:7]';
+g = [1:365]';
 
-ThetaLS = Phi_modello\dati_modello;
+[GA,GS] = meshgrid(g, s);
 
-y_modello = Phi_modello * ThetaLS;
+Phi_ext = [cos(w_settimanale*GS(:)) sin(w_settimanale*GS(:)) ...
+    cos(2*w_settimanale*GS(:)) sin(2*w_settimanale*GS(:)) ...
+    cos(3*w_settimanale*GS(:)) sin(3*w_settimanale*GS(:)) ...
+    cos(w_annuale*GA(:)) sin(w_annuale*GA(:)) ... 
+    cos(2*w_annuale*GA(:)) sin(2*w_annuale*GA(:)) ... 
+    cos(3*w_annuale*GA(:)) sin(3*w_annuale*GA(:)) ...
+    cos(4*w_annuale*GA(:)) sin(4*w_annuale*GA(:)) ...
+    cos(5*w_annuale*GA(:)) sin(5*w_annuale*GA(:)) ...
+    cos(6*w_annuale*GA(:)) sin(6*w_annuale*GA(:)) ...
+    cos(7*w_annuale*GA(:)) sin(7*w_annuale*GA(:)) ...
+    cos(8*w_annuale*GA(:)) sin(8*w_annuale*GA(:)) ... 
+    cos(9*w_annuale*GA(:)) sin(9*w_annuale*GA(:)) ...
+    cos(10*w_annuale*GA(:)) sin(10*w_annuale*GA(:))];
 
-Phi_val = [Phi_sett_validazione Phi_ann_validazione];
+dati_previsione = Phi_ext * ThetaLS;
 
-y_val = Phi_val * ThetaLS;
+dati_previsione_mat = reshape(dati_previsione, size(GA));
 
 for i=1:1:6
-    y_val(i) = y_val(i) + media_natale;
+    for j=1:1:7
+        dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_natale;
+    end
 end
 
 for i=357:1:365
-    y_val(i) = y_val(i) + media_natale;
+    for j=1:1:7
+        dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_natale;
+    end
 end
 
 for i=214:1:225
-    y_val(i) = y_val(i) + media_ferragosto;
+    for j=1:1:7
+        dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_ferragosto;
+    end
 end
 
-ytrend2 = y_trend(365);
-y_val = y_val + ytrend2;
+y_trend2 = y_trend(365);
 
-figure(4);
-title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
-xlabel("Giorno anno");
-ylabel("Consumo energetico [GW]");
-hold on
+dati_previsione_mat = dati_previsione_mat + y_trend2;
+
+figure(1)
+plot3(anno_validazione, settimana_validazione,dati_validazione,'o')
+title("MODELLO 3D")
+xlabel('Giorno dell''anno')
+ylabel('Giorno della settimana')
+zlabel('Consumo energetico [GW]')
 grid on
-plot(dati_validazione)
-plot(y_val);
+hold on
+mesh (GA, GS, dati_previsione_mat);
 
 epsilon_val = dati_validazione - y_val;
 SSR_val = (epsilon_val') * epsilon_val;
 
-figure(5)
-plot(epsilon_val)
-grid on
-
-figure(6)
-histogram(epsilon_val)
-grid on
