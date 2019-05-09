@@ -126,7 +126,7 @@ y_val = y_val + ytrend2;
 figure(4);
 title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
+ylabel("Consumo energetico [GW]");
 hold on
 grid on
 plot(dati_validazione)

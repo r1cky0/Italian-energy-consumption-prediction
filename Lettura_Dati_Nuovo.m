@@ -23,14 +23,14 @@ figure(1)
 plot(dati)
 title("DATI")
 xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
+ylabel("Consumo energetico [GW]");
 grid on
 
 figure(2)
 plot(dati)
 title("TREND")
 xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
+ylabel("Consumo energetico [GW]");
 hold on
 
 %% DETRENDIZZAZIONE DATI
@@ -329,7 +329,7 @@ SSR_validazione12 = epsilon_validazione12'*epsilon_validazione12;
 figure(3);
 title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
+ylabel("Consumo energetico [GW]");
 hold on
 grid on
 plot(giorni_anno_validazione, dati_validazione)
@@ -351,7 +351,7 @@ y_tot_fin = Phi_tot_val * ThetaLS_totale;
 figure(4);
 title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
-ylabel("Consumo energetico [kw]");
+ylabel("Consumo energetico [GW]");
 hold on
 grid on
 plot(giorni_anno_validazione, dati_validazione)
@@ -388,10 +388,18 @@ plot3(giorni_anno_validazione, giorni_settimana_validazione,dati_validazione,'o'
 title("MODELLO 3D")
 xlabel('Giorno dell''anno')
 ylabel('Giorno della settimana')
-zlabel('Consumo energetico [kw]')
+zlabel('Consumo energetico [GW]')
 grid on
 hold on
 mesh (GA, GS, y_ext_matrice);
+
+figure(9)
+plot3(giorni_anno_validazione, giorni_settimana_validazione,dati_validazione,'o')
+title("MODELLO 3D")
+xlabel('Giorno dell''anno')
+ylabel('Giorno della settimana')
+zlabel('Consumo energetico [GW]')
+grid on
 
 figure(6)
 plot(epsilon_tot_val)
