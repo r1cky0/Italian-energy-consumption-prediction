@@ -138,3 +138,14 @@ SSR_val = (epsilon_val') * epsilon_val;
 
 MSE = immse(dati_validazione,previsione);
 RMSE = sqrt(MSE);
+
+% PLOT PREVISIONE
+figure(1);
+plot(dati_validazione)
+title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
+xlabel("Giorno anno");
+ylabel("Consumo energetico [GW]");
+hold on
+grid on
+plot(previsione);
+
