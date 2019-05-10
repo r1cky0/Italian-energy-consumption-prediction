@@ -133,7 +133,7 @@ for i=2:1:365
 end
 
 %% VALIDAZIONE SU SECONDO ANNO
-epsilon_val = (dati_validazione - previsione)/(dati_validazione);
+epsilon_val = dati_validazione - previsione;
 SSR_val = (epsilon_val') * epsilon_val;
 
 MSE = immse(dati_validazione,previsione);
