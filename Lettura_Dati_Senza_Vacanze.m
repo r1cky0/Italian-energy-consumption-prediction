@@ -4,28 +4,24 @@ clear all
 
 %% LETTURA DATI
 tab = readtable('caricoITAday.xlsx', 'Range', 'A2:C732');
-giorni_anni = tab.giorno_anno;
 giorni_settimana= tab.giorno_settimana;
 dati = tab.dati;
+giorni_anno = tab.giorno_anno;
 
-%Metodo per risolvere NaN mettendoli uguali alla media tra il valore del 
-%giorno prima e quello del giorno dopo
-nulli = isnan(dati);
-for i=1:1:size(dati)
-    if nulli(i)==1
-        dati(i)= (dati(i-1) + dati(i+1))/2;
-    end
-end
+g = [1:730]';
+
+%Metodo per risolvere NaN 
+dati = interp1(g(~isnan(dati)), dati(~isnan(dati)), g, 'linear');
 
 %DATI PER MODELLO(PRIMO ANNO)
-anno_modello = giorni_anni(1:365);
+anno_modello = giorni_anno(1:365);
 
 settimana_modello = giorni_settimana(1:365);
 
 dati_modello = dati(1:365);
                  
 %DATI PER VALIDAZIONE(SECONDO ANNO)
-anno_validazione = giorni_anni(366:730);
+anno_validazione = giorni_anno(366:730);
 
 settimana_validazione = giorni_settimana(366:730);
 
@@ -36,9 +32,7 @@ dati_validazione = dati(366:730);
 uni = ones(365,1);
 n = length(uni);
 
-giorni = [1:365]';
-
-Phi_trend = [uni giorni];
+Phi_trend = [uni anno_modello];
 
 ThetaLS_trend = Phi_trend\dati_modello;
 
@@ -47,6 +41,7 @@ y_trend = Phi_trend * ThetaLS_trend;
 dati_modello = dati_modello - y_trend;
 
 %% SELEZIONE DATI
+%Selezione periodi di vacanza a natale e ferragosto
 anno_modello = cat(1, anno_modello(7:213),anno_modello(226:356));
 
 settimana_modello = cat(1, settimana_modello(7:213),settimana_modello(226:356));
@@ -106,6 +101,9 @@ dati_previsione = Phi_ext * ThetaLS;
 
 dati_previsione_mat = reshape(dati_previsione, size(GA));
 
+%% CORREZIONE GIORNI VACANZA
+%Sommiamo al modello finale la media dei valori assunti nei giorni di
+%vacanza di natale e ferragosto per correggere la predizione
 for i=1:1:6
     for j=1:1:7
         dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_natale;
@@ -128,16 +126,13 @@ y_trend2 = y_trend(365);
 
 dati_previsione_mat = dati_previsione_mat + y_trend2;
 
-figure(1)
-plot3(anno_validazione, settimana_validazione,dati_validazione,'o')
-title("MODELLO 3D")
-xlabel('Giorno dell''anno')
-ylabel('Giorno della settimana')
-zlabel('Consumo energetico [GW]')
-grid on
-hold on
-mesh (GA, GS, dati_previsione_mat);
+previsione = dati_previsione_mat(settimana_validazione(1),giorni_anno(1));
 
-epsilon_val = dati_validazione - y_val;
+for i=2:1:365
+   previsione = cat(1,previsione,dati_previsione_mat(settimana_validazione(i),giorni_anno(i)));
+end
+
+%% VALIDAZIONE SU SECONDO ANNO
+epsilon_val = dati_validazione - previsione;
 SSR_val = (epsilon_val') * epsilon_val;
 

@@ -3,20 +3,15 @@ close all
 clear all
 
 %% LETTURA DATI
-
 tab = readtable('caricoITAday.xlsx', 'Range', 'A2:C732');
-giorni_anni = tab.giorno_anno;
 giorni_settimana= tab.giorno_settimana;
 dati = tab.dati;
+giorni_anno = tab.giorno_anno;
 
-%Metodo per risolvere NaN mettendoli uguali alla media tra il valore del 
-%giorno prima e quello del giorno dopo
-nulli = isnan(dati);
-for i=1:1:size(dati)
-    if nulli(i)==1
-        dati(i)= (dati(i-1) + dati(i+1))/2;
-    end
-end
+g = [1:730]';
+
+%Metodo per risolvere NaN 
+dati = interp1(g(~isnan(dati)), dati(~isnan(dati)), g, 'linear');
 
 %PLOT DI TUTTI I DATI
 figure(1)
@@ -26,6 +21,7 @@ xlabel("Giorno anno");
 ylabel("Consumo energetico [GW]");
 grid on
 
+%PLOT TREND
 figure(2)
 plot(dati)
 title("TREND")
@@ -52,12 +48,12 @@ plot(y_trend)
 grid on
 
 %DATI PER MODELLO(PRIMO ANNO)
-giorni_anno_modello = giorni_anni(1:365);
+giorni_anno_modello = giorni_anno(1:365);
 giorni_settimana_modello = giorni_settimana(1:365);
 dati_modello = dati(1:365);
 
 %DATI PER VALIDAZIONE(SECONDO ANNO)
-giorni_anno_validazione = giorni_anni(366:730);
+giorni_anno_validazione = giorni_anno(366:730);
 giorni_settimana_validazione = giorni_settimana(366:730);
 dati_validazione = dati(366:730);
 
@@ -326,16 +322,7 @@ SSR_validazione11 = epsilon_validazione11'*epsilon_validazione11;
 epsilon_validazione12 = dati_validazione - y_fin12;
 SSR_validazione12 = epsilon_validazione12'*epsilon_validazione12;
 
-figure(3);
-title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
-xlabel("Giorno anno");
-ylabel("Consumo energetico [GW]");
-hold on
-grid on
-plot(giorni_anno_validazione, dati_validazione)
-plot(y_fin10);
-
-%MODELLO 10 SEMBRA IL MIGLIORE PER LA CROSSVALIDAZIONE
+%MODELLO 10 é IL MIGLIORE PER LA CROSSVALIDAZIONE
 
 %% MODELLO TOTALE
 Phi_totale = [Phi_settimanale Phi_annuale10];
@@ -348,7 +335,7 @@ Phi_tot_val = [Phi_validazione Phi_annuale10];
 
 y_tot_fin = Phi_tot_val * ThetaLS_totale;
 
-figure(4);
+figure(3);
 title('VALIDAZIONE MODELLO (SU DATI SECONDO ANNO)')
 xlabel("Giorno anno");
 ylabel("Consumo energetico [GW]");
@@ -361,7 +348,6 @@ epsilon_tot_val = dati_validazione - y_tot_fin;
 SSR_tot_val = (epsilon_tot_val') * epsilon_tot_val;
 
 %% PLOT 3D
-
 g = [1:7]';
 [GA,GS] = meshgrid(giorni_anno_modello, g);
 
@@ -383,7 +369,7 @@ y_ext = Phi_ext * ThetaLS_totale;
 
 y_ext_matrice = reshape(y_ext, size(GA));
 
-figure(5)
+figure(4)
 plot3(giorni_anno_validazione, giorni_settimana_validazione,dati_validazione,'o')
 title("MODELLO 3D")
 xlabel('Giorno dell''anno')
@@ -393,22 +379,16 @@ grid on
 hold on
 mesh (GA, GS, y_ext_matrice);
 
-figure(9)
-plot3(giorni_anno_validazione, giorni_settimana_validazione,dati_validazione,'o')
-title("MODELLO 3D")
-xlabel('Giorno dell''anno')
-ylabel('Giorno della settimana')
-zlabel('Consumo energetico [GW]')
-grid on
-
-figure(6)
+% PLOT EPSILON_TOT_VALIDAZIONE
+figure(5)
 plot(epsilon_tot_val)
 title("EPSILON DI VALIDAZIONE")
 xlabel("Giorno dell'anno")
 ylabel("Entitá errore")
 grid on
 
-figure(7);
+% ISTOGRAMMA EPSILON_TOT_VALIDAZIONE
+figure(6);
 histogram(epsilon_tot_val,20)
 title("EPSILON DI VALIDAZIONE")
 xlabel("Entitá errore")

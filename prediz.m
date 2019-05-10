@@ -1,5 +1,6 @@
 function [s_hat] = prediz(d,w)
 
+%% LETTURA DATI
 tab = readtable('caricoITAday.xlsx', 'Range', 'A2:C732');
 giorni_settimana= tab.giorno_settimana;
 dati = tab.dati;
@@ -84,6 +85,7 @@ dati_previsione = dati_previsione + y_trend2;
 
 dati_previsione_mat = reshape(dati_previsione, size(GA));
 
+%% CORREZIONE PERIODI DI VACANZA
 for i=1:1:6
     for j=1:1:7
         dati_previsione_mat(j,i) = dati_previsione_mat(j,i) + media_natale;
@@ -102,6 +104,7 @@ for i=357:1:365
     end
 end
 
+%% OUTPUT
 s_hat = dati_previsione_mat(w,d);
 
 end
