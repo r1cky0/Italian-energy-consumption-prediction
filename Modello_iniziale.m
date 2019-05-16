@@ -347,6 +347,9 @@ plot(y_tot_fin);
 epsilon_tot_val = dati_validazione - y_tot_fin;
 SSR_tot_val = (epsilon_tot_val') * epsilon_tot_val;
 
+MSE = immse(dati_validazione, y_tot_fin);
+RMSE = sqrt(MSE);
+
 %% PLOT 3D
 g = [1:7]';
 [GA,GS] = meshgrid(giorni_anno_modello, g);
