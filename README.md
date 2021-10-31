@@ -1,4 +1,4 @@
-# Italian-energy-consumption-prediction
+# Italian Energy Consumption Prediction
 
 *Goal: identification of an annual profile model for the long-term prediction of the Italian energy consumption time series*
 
