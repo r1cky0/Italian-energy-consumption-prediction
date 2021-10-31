@@ -1,9 +1,11 @@
 # Italian Energy Consumption Prediction
 
-*Goal: identification of an annual profile model for the long-term prediction of the Italian energy consumption time series*
+*Model Identification and Data Analysis course project at University of Pavia  
+Developed in collaboration with: @simoneghiazzi, @riccardocrescenti, @chiarabertocchi and @r1cky0*
 
 ## General Overview
 
+*Goal: identification of an annual profile model for the long-term prediction of the Italian energy consumption time series*
 The provided dataset is composed of Italian energy consumption data for a two-year period.  
 From initial observations of the available dataset, there is a periodic pattern, both annual and weekly. For this reason, Fourier Series will be used in the development of the model.  
 The first step is to make the series stationary on average through the operation of detrending
