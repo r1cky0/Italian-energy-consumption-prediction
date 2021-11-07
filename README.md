@@ -1,7 +1,7 @@
 # Italian Energy Consumption Prediction
 
 *Model Identification and Data Analysis course project at University of Pavia  
-Developed in collaboration with: @simoneghiazzi, @riccardocrescenti, @chiarabertocchi and @r1cky0*
+Developed in collaboration with: @simoneghiazzi, @riccardocrescenti, @chiarabertocchi and @lucacolombo97*
 
 ## General Overview
 
